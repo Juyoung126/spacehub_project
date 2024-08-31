@@ -24,10 +24,10 @@ public class UserAuthServiceImpl implements UserAuthService {
     private final JavaMailSender mailSender;
 
     private final Map<String, VerificationCodeEntry> verificationCodes = new HashMap<>();
-    
 
     @Override
     public void saveMember(Member member) {
+        // 비밀번호 암호화 없이 평문 비밀번호 저장
         userAuthRepository.save(member);
     }
 
@@ -39,13 +39,15 @@ public class UserAuthServiceImpl implements UserAuthService {
     @Override
     public Member userLogin(String memberId, String memberPassword) {
         Member member = userAuthRepository.findByMemberId(memberId);
-        return (member != null && member.getMemberPassword().equals(memberPassword)) ? member : null;
+        if (member != null && memberPassword.equals(member.getMemberPassword())) { // 평문 비밀번호 검증
+            return member;
+        }
+        return null;
     }
 
     @Override
     public void sendVerificationCode(String email) {
         String verificationCode = generateVerificationCode();
-        System.out.println("Generated Code: " + verificationCode);
 
         try {
             sendEmail(email, "이메일 인증번호", "인증번호: " + verificationCode);
@@ -54,7 +56,6 @@ public class UserAuthServiceImpl implements UserAuthService {
         }
 
         verificationCodes.put(email, new VerificationCodeEntry(verificationCode, System.currentTimeMillis()));
-        System.out.println("Stored Code for " + email + ": " + verificationCode);
     }
 
     @Override
@@ -74,10 +75,36 @@ public class UserAuthServiceImpl implements UserAuthService {
         return entry.getCode().equals(code);
     }
 
+    @Override
+    public String findIdByNameAndEmail(String name, String email) {
+        Member member = userAuthRepository.findByMemberNameAndMemberEmail(name, email);
+        return (member != null) ? member.getMemberId() : null;
+    }
+
+    @Override
+    public boolean resetPassword(String memberId, String email) {
+        Member member = userAuthRepository.findByMemberId(memberId);
+        if (member != null && member.getMemberEmail().equals(email)) {
+            String tempPassword = generateTemporaryPassword();
+            member.setMemberPassword(tempPassword); // 임시 비밀번호 저장 (암호화 없이)
+            userAuthRepository.save(member);
+
+            // 임시 비밀번호를 이메일로 전송
+            try {
+                sendEmail(email, "임시 비밀번호", "임시 비밀번호: " + tempPassword);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
     private void sendEmail(String to, String subject, String text) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
-        helper.setFrom("spacehubProj@gmail.com");  // 발송자 이메일 주소
+        helper.setFrom("spacehubProj@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(text, true);
@@ -85,11 +112,22 @@ public class UserAuthServiceImpl implements UserAuthService {
         mailSender.send(message);
     }
 
-
     private String generateVerificationCode() {
         Random random = new Random();
         int code = 100000 + random.nextInt(900000);
         return Integer.toString(code);
+    }
+
+    private String generateTemporaryPassword() {
+        Random random = new Random();
+        int length = 10;
+        StringBuilder sb = new StringBuilder(length);
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(chars.length());
+            sb.append(chars.charAt(index));
+        }
+        return sb.toString();
     }
 
     private static class VerificationCodeEntry {

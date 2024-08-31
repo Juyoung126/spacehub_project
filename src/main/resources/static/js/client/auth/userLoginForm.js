@@ -26,7 +26,7 @@ $("#signupBtn").on("click", function(){
 });
 
 $("#findIdBtn").on("click", function(){
-    locationProcess("/auth/findIdForm");
+    locationProcess("/auth/findIdPwdForm");
 });
 
 $("#login-btn").on("click", function(){

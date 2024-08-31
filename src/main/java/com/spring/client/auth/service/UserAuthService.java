@@ -7,5 +7,7 @@ public interface UserAuthService {
     boolean isIdAvailable(String memberId);
     Member userLogin(String memberId, String memberPassword);
     void sendVerificationCode(String email);
-    boolean verifyCode(String email, String code); // 인증번호를 위한 파라미터 추가
+    boolean verifyCode(String email, String code);
+    String findIdByNameAndEmail(String name, String email);
+    boolean resetPassword(String memberId, String email);
 }
