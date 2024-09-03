@@ -3,9 +3,12 @@ package com.spring.admin.space.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.spring.admin.space.domain.Space;
+
+import jakarta.transaction.Transactional;
 
 public interface SpaceRepository extends JpaRepository<Space, Long>{
 
@@ -16,17 +19,33 @@ public interface SpaceRepository extends JpaRepository<Space, Long>{
 	List<Space> findBySpNameContaining(String spName);
 
 	// 모든 게시물 조회 (JPQL) : JPQL(Java Persistence Query Language)을 사용하여 Space 엔티티의 모든 레코드를 가져옴
-	// select * from Space 와 유사한 쿼리.
 	@Query("SELECT b FROM Space b")
 	public List<Space> spaceList();
+	// 단순히 모든 레코드 조회하는 거면 굳이 @Query 쓸 필요 없이 JPA 기본 제공 findAll() 사용하는 것도 괜춘. 
+	public List<Space> findAll();
+	
+	//@Modifying	// 데이터 수정, 삭제 쿼리에 주로 씀. 
+	@Query("SELECT b FROM Space b WHERE b.spNo =?1")
+	public Space spaceDetail(Long spNo);
 
-//	@Query("SELECT b FROM Space b WHERE b.sp_no =?1")
-//	public Space spaceDetail(Long spNo);
+	@Modifying
+	@Transactional
+	@Query("UPDATE Space b SET b.spName = ?2 WHERE b.spNo = ?1")
+	public int spaceUpdate(Long spNo, String spName);
+	
+	@Modifying
+	@Transactional
+	@Query("DELETE FROM Space b WHERE b.spNo = ?1")
+	public int spaceDelete(Long spNo);
 
-//	@Modifying
-//	@Query("UPDATE Space b SET b.sp_name =?2 WHERE b.sp_no =?1")
-//	public int spaceUpdate(Long spNo, String spName);
+	// 조회수 증가
+	@Modifying
+	@Transactional
+	@Query("UPDATE Space b set b.spHit = b.spHit+1 WHERE b.spNo = ?1")
+	void spaceHitUpdate(Long spNo);
 	
 	
-	//spNo, admNo, spName, spCapacitym spHourPrice, spKeyword, spMainImage
+	//spNo, admNo, spName, spCapacity, spHourPrice, spKeyword, spMainImage(null)
 }
+
+

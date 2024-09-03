@@ -1,5 +1,7 @@
 package com.spring.admin.space.domain;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,23 +24,27 @@ public class Space {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "space_seq")
     @Column(name = "sp_no")
-    private Long spNo;
+    private Long spNo;	// 공간 식별번호
 
     @Column(name = "adm_no", nullable = false)
-    private Long admNo;
+    private Long admNo;	// 관리자 식별번호
 
     @Column(name = "sp_name", nullable = false)
-    private String spName;
+    private String spName;	// 공간 이름
 
     @Column(name = "sp_capacity", length = 30, nullable = false)
-    private String spCapacity;
+    private String spCapacity;	// 이용 가능 인원
 
     @Column(name = "sp_hour_price", nullable = false)
-    private Long spHourPrice;
+    private Long spHourPrice;	// 시간당 가격
 
     @Column(name = "sp_keyword", nullable = false)
-    private String spKeyword;
+    private String spKeyword;	// 이용 목적 키워드
 
     @Column(name = "sp_main_image")
-    private String spMainImage;
+    private String spMainImage;	// 대표 이미지
+
+    @ColumnDefault(value = "0")
+	private int spHit;		// 조회수
+
 }
