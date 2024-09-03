@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceHub 관리자</title>
+</head>
+<body>
+    <h1>회원 목록</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member : ${memberList}" th:attr="data-member-no=${member.memberNo}">
+                <td th:text="${member.memberNo}">No</td>
+                <td th:text="${member.memberId}">ID</td>
+                <td class="goDetail" th:text="${member.memberName}">Name</td>
+                <td th:text="${member.memberEmail}">Email</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/admin/memberManage/memberList.js"></script>
+</body>
+</html>
