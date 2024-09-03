@@ -1,5 +1,7 @@
 let isEmailVerified = false; // 이메일 인증 상태 변수
-let originalEmail = $("#memberEmail").val(); // 원래 이메일 저장
+let originalName = $("#memberName").val(); // 원래 이름
+let originalPhone = $("#memberPhone").val(); // 원래 전화번호
+let originalEmail = $("#memberEmail").val(); // 원래 이메일
 
 $(document).ready(function() {
     // 비밀번호와 비밀번호 확인 일치 여부 확인
@@ -14,41 +16,66 @@ $(document).ready(function() {
         }
     });
 
-    // 이메일 인증 요청 버튼 클릭 시
-    $("#verifyBtn").on("click", function() {
-        const memberEmail = $("#memberEmail").val();
+	// 이메일 인증 요청 버튼 클릭 시
+	$("#verifyBtn").on("click", function() {
+	    const memberEmail = $("#memberEmail").val();
 
-        // 이메일이 변경되었는지 확인
-        if (memberEmail === originalEmail) {
-            alert("이메일이 변경되지 않았습니다.");
-            return;
-        }
+	    // 이메일 입력 여부 확인
+	    if (!chkData("#memberEmail", "이메일을")) {
+	        $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
+	        return;
+	    }
 
-        // 이메일이 변경된 경우 인증 요청
-        if (!chkData("#memberEmail", "이메일을")) return; // 이메일 입력 여부 확인
+	    // 이메일이 변경되었는지 확인
+	    if (memberEmail === originalEmail) {
+	        alert("이메일이 변경되지 않았습니다.");
+	        return;
+	    }
 
-        $.ajax({
-            url: '/auth/sendVerificationCode',
-            type: 'POST',
-            data: JSON.stringify({ email: memberEmail }), // JSON 형식으로 변환
-            contentType: 'application/json', // 요청 헤더 설정
-            dataType: 'json', // 응답 데이터 형식 설정
-            success: function(response) {
-                if (response.message === "Verification code sent to email") {
-                    alert("인증번호를 이메일로 발송했습니다.");
-                    isEmailVerified = false; // 초기 상태로 설정
-                } else {
-                    alert("인증번호 발송에 실패했습니다.");
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error("Status:", xhr.status);
-                console.error("Response Text:", xhr.responseText);
-                console.error("Error:", error);
-                alert("인증번호 발송 중 오류가 발생했습니다.");
-            }
-        });
-    });
+	    // 이메일 중복 체크
+	    $.ajax({
+	        url: '/auth/checkEmail',
+	        type: 'POST',
+	        data: JSON.stringify({ memberEmail: memberEmail }), // JSON 형식으로 변환
+	        contentType: 'application/json', // 요청 헤더 설정
+	        dataType: 'json', // 응답 데이터 형식 설정
+	        success: function(response) {
+	            if (response.available) {
+	                // 이메일 중복이 없는 경우, 인증번호 발송 요청
+	                $.ajax({
+	                    url: '/auth/sendVerificationCode',
+	                    type: 'POST',
+	                    data: JSON.stringify({ email: memberEmail }), // JSON 형식으로 변환
+	                    contentType: 'application/json', // 요청 헤더 설정
+	                    dataType: 'json', // 응답 데이터 형식 설정
+	                    success: function(response) {
+	                        if (response.message === "Verification code sent to email") {
+	                            alert("인증번호를 이메일로 발송했습니다.");
+	                            isEmailVerified = false; // 이메일 인증 상태를 초기화
+	                        } else {
+	                            alert("인증번호 발송에 실패했습니다.");
+	                        }
+	                    },
+	                    error: function(xhr, status, error) {
+	                        console.error("Status:", xhr.status);
+	                        console.error("Response Text:", xhr.responseText);
+	                        console.error("Error:", error);
+	                        alert("인증번호 발송 중 오류가 발생했습니다.");
+	                    }
+	                });
+	            } else {
+	                alert("이미 사용 중인 이메일입니다.");
+	                $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
+	            }
+	        },
+	        error: function(xhr, status, error) {
+	            console.error("Status:", xhr.status);
+	            console.error("Response Text:", xhr.responseText);
+	            console.error("Error:", error);
+	            alert("이메일 중복 확인 중 오류가 발생했습니다.");
+	        }
+	    });
+	});
 
     // 인증번호 확인 버튼 클릭 시
     $("#verifyCheckBtn").on("click", function() {
@@ -122,4 +149,25 @@ $(document).ready(function() {
             }
         });
     });
+	
+	
+	$("#resetBtn").on("click", function() {
+	       // 입력 필드와 상태 초기화
+	       $("#newPassword").val('');
+	       $("#newPasswordConfirm").val('');
+	       $("#memberName").val(originalName);
+	       $("#memberPhone").val(originalPhone);
+	       $("#memberEmail").val(originalEmail);
+	       $("#verificationCode").val('');
+	       
+	       $("#newPasswordConfirm").css("border", "1px solid #ccc"); // 비밀번호 확인 필드의 테두리 초기화
+
+	       isEmailVerified = false;
+	}); 
+	
+	$("#cancelBtn").on("click", function(){
+		locationProcess("/admin/myPage");
+	});
 });
+
+

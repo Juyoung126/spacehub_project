@@ -35,7 +35,11 @@ public class UserAuthServiceImpl implements UserAuthService {
     public boolean isIdAvailable(String memberId) {
         return !userAuthRepository.existsByMemberId(memberId);
     }
-
+    
+    @Override
+    public boolean isEmailAvailable(String memberEmail) {
+    	return !userAuthRepository.existsByMemberEmail(memberEmail);
+    }
     @Override
     public Member userLogin(String memberId, String memberPassword) {
         Member member = userAuthRepository.findByMemberId(memberId);

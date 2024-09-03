@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequestMapping("/admin/auth/*")
+@RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminAuthController {
 	@Autowired
@@ -30,7 +30,7 @@ public class AdminAuthController {
      * 로그인 폼을 반환하는 메서드
      * @return 로그인 폼의 뷰 이름
      */
-    @GetMapping("/login")
+    @GetMapping
     public String adminLoginForm() {
         return "admin/auth/adminLoginForm"; 
     }

@@ -9,6 +9,8 @@ public interface UserAuthRepository extends JpaRepository<Member, Long> {
     // ID로 Member 존재 여부 확인
     boolean existsByMemberId(String memberId);
 
+    // Email로 Member 존재 여부 확인
+	boolean existsByMemberEmail(String memberEmail);
     // memberId로 Member 조회
     Member findByMemberId(String memberId);
 
@@ -17,4 +19,5 @@ public interface UserAuthRepository extends JpaRepository<Member, Long> {
     
     // 이름, memberId, 이메일로 Member 조회
     Member findByMemberNameAndMemberIdAndMemberEmail(String memberName, String memberId, String memberEmail);
+
 }

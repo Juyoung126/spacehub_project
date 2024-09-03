@@ -5,6 +5,7 @@ import com.spring.client.domain.Member;
 public interface UserAuthService {
     void saveMember(Member member);
     boolean isIdAvailable(String memberId);
+	boolean isEmailAvailable(String memberEmail);
     Member userLogin(String memberId, String memberPassword);
     void sendVerificationCode(String email);
     boolean verifyCode(String email, String code);

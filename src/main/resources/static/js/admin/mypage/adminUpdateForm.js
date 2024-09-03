@@ -1,3 +1,5 @@
+let originalName = $("#admName").val(); // 원래 이름
+let originalPhone = $("#admPhone").val(); // 원래 전화번호
 $(document).ready(function() {
     // 비밀번호와 비밀번호 확인 일치 여부 확인
     $("#newPassword, #newPasswordConfirm").on("keyup", function() {
@@ -43,7 +45,19 @@ $(document).ready(function() {
         });
     });
 	
-	$("#cancelBtn").on("click", function(event) {
+	$("#resetBtn").on("click", function() {
+		// 입력 필드와 상태 초기화
+        $("#newPassword").val('');
+        $("#newPasswordConfirm").val('');
+        $("#admName").val(originalName);
+        $("#admPhone").val(originalPhone);
+        $("#verificationCode").val('');
+        
+        $("#newPasswordConfirm").css("border", "1px solid #ccc"); // 비밀번호 확인 필드의 테두리 초기화
+		
+	}); 
+		
+	$("#cancelBtn").on("click", function(){
 		locationProcess("/admin/myPage");
 	});
 });

@@ -35,27 +35,52 @@ $("#idCheckBtn").on("click", function () {
 $("#verifyBtn").on("click", function () {
     const memberEmail = $("#memberEmail").val();
 
-    if (!chkData("#memberEmail", "이메일을")) return; // 이메일 입력 여부 확인
+    if (!chkData("#memberEmail", "이메일을")) {
+        $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
+        return; // 이메일 입력 여부 확인
+    }
 
+    // 이메일 중복 체크
     $.ajax({
-        url: '/auth/sendVerificationCode',
+        url: '/auth/checkEmail',
         type: 'POST',
-        data: JSON.stringify({ email: memberEmail }), // JSON 형식으로 변환
+        data: JSON.stringify({ memberEmail: memberEmail }), // JSON 형식으로 변환
         contentType: 'application/json', // 요청 헤더 설정
         dataType: 'json', // 응답 데이터 형식 설정
         success: function(response) {
-            if (response.message === "Verification code sent to email") {
-                alert("인증번호를 이메일로 발송했습니다.");
-                isEmailVerified = false; // 초기 상태로 설정
+            if (response.available) {
+                // 이메일 중복이 없는 경우, 인증번호 발송 요청
+                $.ajax({
+                    url: '/auth/sendVerificationCode',
+                    type: 'POST',
+                    data: JSON.stringify({ email: memberEmail }), // JSON 형식으로 변환
+                    contentType: 'application/json', // 요청 헤더 설정
+                    dataType: 'json', // 응답 데이터 형식 설정
+                    success: function(response) {
+                        if (response.message === "Verification code sent to email") {
+                            alert("인증번호를 이메일로 발송했습니다.");
+                            isEmailVerified = false; // 이메일 인증 상태를 초기화
+                        } else {
+                            alert("인증번호 발송에 실패했습니다.");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Status:", xhr.status);
+                        console.error("Response Text:", xhr.responseText);
+                        console.error("Error:", error);
+                        alert("인증번호 발송 중 오류가 발생했습니다.");
+                    }
+                });
             } else {
-                alert("인증번호 발송에 실패했습니다.");
+                alert("이미 사용 중인 이메일입니다.");
+                $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
             }
         },
         error: function(xhr, status, error) {
             console.error("Status:", xhr.status);
             console.error("Response Text:", xhr.responseText);
             console.error("Error:", error);
-            alert("인증번호 발송 중 오류가 발생했습니다.");
+            alert("이메일 중복 확인 중 오류가 발생했습니다.");
         }
     });
 });
@@ -65,8 +90,14 @@ $("#verifyCheckBtn").on("click", function () {
     const verificationCode = $("#verificationCode").val().trim(); // 공백 제거
     const memberEmail = $("#memberEmail").val();
 
-    if (!chkData("#verificationCode", "인증번호를")) return; // 인증번호 입력 여부 확인
-    if (!chkData("#memberEmail", "이메일을")) return; // 이메일 입력 여부 확인
+    if (!chkData("#verificationCode", "인증번호를")) {
+        $("#verificationCode").focus(); // 인증번호 입력 필드에 포커스
+        return; // 인증번호 입력 여부 확인
+    }
+    if (!chkData("#memberEmail", "이메일을")) {
+        $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
+        return; // 이메일 입력 여부 확인
+    }
 
     $.ajax({
         url: '/auth/verifyCode',
@@ -81,6 +112,7 @@ $("#verifyCheckBtn").on("click", function () {
             } else {
                 alert("인증번호가 유효하지 않거나 만료되었습니다.");
                 isEmailVerified = false; // 인증 실패
+                $("#verificationCode").focus(); // 인증번호 입력 필드에 포커스
             }
         },
         error: function(xhr, status, error) {
@@ -95,15 +127,31 @@ $("#verifyCheckBtn").on("click", function () {
 // 회원가입 버튼 클릭 시
 $("#signupBtn").on("click", function () {
     // 필수 입력 필드 확인
-    if (!chkData("#memberId", "아이디를")) return;
-    if (!chkData("#memberPassword", "비밀번호를")) return;
-    if (!chkData("#memberPasswordConfirm", "비밀번호 확인을")) return;
-    if (!chkData("#memberEmail", "이메일을")) return;
-    if (!chkData("#memberPhone", "전화번호를")) return;
+    if (!chkData("#memberId", "아이디를")) {
+        $("#memberId").focus(); // 아이디 입력 필드에 포커스
+        return;
+    }
+    if (!chkData("#memberPassword", "비밀번호를")) {
+        $("#memberPassword").focus(); // 비밀번호 입력 필드에 포커스
+        return;
+    }
+    if (!chkData("#memberPasswordConfirm", "비밀번호 확인을")) {
+        $("#memberPasswordConfirm").focus(); // 비밀번호 확인 입력 필드에 포커스
+        return;
+    }
+    if (!chkData("#memberEmail", "이메일을")) {
+        $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
+        return;
+    }
+    if (!chkData("#memberPhone", "전화번호를")) {
+        $("#memberPhone").focus(); // 전화번호 입력 필드에 포커스
+        return;
+    }
 
     // 비밀번호 일치 확인
     if ($("#memberPassword").val() !== $("#memberPasswordConfirm").val()) {
         alert("비밀번호가 일치하지 않습니다.");
+        $("#memberPasswordConfirm").focus(); // 비밀번호 확인 입력 필드에 포커스
         return;
     }
 
@@ -111,18 +159,21 @@ $("#signupBtn").on("click", function () {
     const pwdRegex = /^(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,12}$/;
     if (!pwdRegex.test($("#memberPassword").val())) {
         alert("비밀번호는 영소문자, 숫자, 특수문자를 포함하여 8~12자이어야 합니다.");
+        $("#memberPassword").focus(); // 비밀번호 입력 필드에 포커스
         return;
     }
 
     // 아이디 인증이 완료되었는지 확인
     if (!isIdVerified) {
         alert("아이디 인증을 진행해 주세요.");
+        $("#memberId").focus(); // 아이디 입력 필드에 포커스
         return;
     }
 
     // 이메일 인증이 완료되었는지 확인
     if (!isEmailVerified) {
         alert("이메일 인증을 진행해 주세요.");
+        $("#memberEmail").focus(); // 이메일 입력 필드에 포커스
         return;
     }
 

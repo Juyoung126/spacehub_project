@@ -39,7 +39,7 @@ public class Member {
     @Column(name = "member_id", length = 15)
     private String memberId;
 
-    @Column(name = "member_passwd", length = 15, nullable = false)
+    @Column(name = "member_passwd", length = 15)
     private String memberPassword;
 
     @Column(name = "member_email", length = 30)

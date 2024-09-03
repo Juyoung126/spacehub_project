@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceHub</title>
-    
-    <script src="/js/jquery-3.7.1.min.js"></script>
-    <script src="/js/common.js"></script>
-    <script src="/js/client/mypage/userProfile.js"></script>
+    <link rel="stylesheet" href="/css/client/mypage/userProfile.css">
 </head>
 <body>
     <h1>마이페이지</h1>
-    <!-- 로그인된 경우 회원 정보 표시 -->
     <div th:if="${isLoggedIn}">
         <div id="profile">
-            <p>이름: <span id="memberName" th:text="${member.memberName}"></span></p>
-            <p>아이디: <span id="memberId" th:text="${member.memberId}"></span></p>
-            <p>이메일: <span id="memberEmail" th:text="${member.memberEmail}"></span></p>
-            <p>전화번호: <span id="memberPhone" th:text="${member.memberPhone}"></span></p>
-            <p>가입일자: <span id="memberCreatedAt" th:text="${member.memberCreatedAt}"></span></p>
+            <p>이름: <span th:text="${member.memberName}"></span></p>
+            <p>아이디: <span th:text="${member.memberId}"></span></p>
+            <p>이메일: <span th:text="${member.memberEmail}"></span></p>
+            <p>전화번호: <span th:text="${member.memberPhone}"></span></p>
+            <p>가입일자: <span th:text="${formattedDate}"></span></p>
+        </div>
+
+        <div class="buttons">
+            <button type="button" id="userProfileUpdateFormBtn">개인정보 수정</button>
+            <button type="button" id="userDeleteBtn">회원 탈퇴</button>
         </div>
     </div>
+
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/client/mypage/userProfile.js"></script>
 </body>
 </html>

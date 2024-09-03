@@ -1,8 +1,7 @@
-$(document).ready(function() {
-    const isLoggedIn = /*[[${isLoggedIn}]]*/ false;
+$("#userProfileUpdateFormBtn").on("click", function(){
+    locationProcess("/myPage/checkPassword");
+});
 
-    if (!isLoggedIn) {
-        alert("로그인 후 이용 가능합니다.");
-		locationProcess("/auth/login");
-    }
+$("#userDeleteBtn").on("click", function(){
+	locationProcess("/myPage/userDeleteForm");
 });
