@@ -147,4 +147,9 @@ public class UserAuthServiceImpl implements UserAuthService {
             return timestamp;
         }
     }
+    
+    @Override
+    public Member getMemberById(String memberId) {
+    	return userAuthRepository.findByMemberId(memberId);
+    }
 }

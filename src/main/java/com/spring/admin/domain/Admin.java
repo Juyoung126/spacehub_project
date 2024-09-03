@@ -1,5 +1,10 @@
 package com.spring.admin.domain;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,5 +53,14 @@ public class Admin {
 	@Column(name="adm_state",length=10, nullable=false)
 	private String admState = "active";
 	
+	@Column(name = "adm_phone", length = 15)
+    private String admPhone;
+	
+	@CreationTimestamp
+    @Column(name = "adm_created_at")
+    @ColumnDefault(value = "sysdate")
+    private LocalDateTime admCreatedAt;
 
+    @Column(name = "adm_update_at")
+    private LocalDateTime admUpdateAt;
 }

@@ -10,4 +10,5 @@ public interface UserAuthService {
     boolean verifyCode(String email, String code);
     String findIdByNameAndEmail(String name, String email);
     boolean resetPassword(String memberId, String email);
+	Member getMemberById(String memberId);
 }
