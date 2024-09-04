@@ -1,25 +1,25 @@
 $("#login-btn").on("click", function(){
     // 유효성 검사
-    if(!chkData("#userId", "아이디를")) return;
-    if(!chkData("#userPasswd", "비밀번호를")) return;
+    if(!chkData("#admId", "아이디를")) return;
+    if(!chkData("#admPasswd", "비밀번호를")) return;
     
     // 로그인 데이터 준비
     let loginData = {
         admId: $("#admId").val(),      
-        admPassword: $("#admPasswd").val() 
+        admPasswd: $("#admPasswd").val() 
     };
 
     // AJAX 요청
     $.ajax({
         type: "POST",
-        url: "/admin/auth/adminLogin",
+        url: "/admin/adminLogin",
         data: JSON.stringify(loginData),
         contentType: "application/json; charset=utf-8",
         dataType: "json"
     }).done(function(response) {
         if (response.message === "Login successful") {
             alert("로그인 성공!");
-            window.location.href = "/admin";
+            window.location.href = "/admin/main";
         } else {
             alert(response.message);
         }
