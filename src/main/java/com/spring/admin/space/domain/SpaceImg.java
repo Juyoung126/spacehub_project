@@ -22,10 +22,11 @@ public class SpaceImg {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "space_img_seq")
 	@Column(name = "api_no")
-	private Long apiNo;
+	private Long apiNo;		// 이미지 식별번호
 	
 	@Id
 	@Column(name = "sp_img")
-	private String spImg;
+	private String spImg;	// 공간 이미지
 	
+	// spDetail - sp_detail
 }
