@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+/* 드롭다운 스타일 및 정렬 */
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+#status-filter {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    width: 200px;
+}
+
+/* 테이블 스타일 */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* .hidden 클래스 스타일 */
+.hidden { 
+    display: none; 
+}
+
+/* .goDetail 클래스 스타일 */
+.goDetail {
+    cursor: default; /* 기본 커서로 변경 */
+    color: inherit;  /* 상위 요소의 색상 상속 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.goDetail:hover {
+    color: inherit; /* 호버 시 색상 상속 */
+    text-decoration: none; /* 호버 시 밑줄 제거 */
+}

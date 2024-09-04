@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.spring.admin.auth.repository.AdminAuthRepository;
 import com.spring.admin.domain.Admin;
 
-
 @Service
 public class AdminAuthServiceImpl implements AdminAuthService {
 	
@@ -15,13 +14,29 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 	
 	@Override
 	public Admin adminLogin(String admId, String admPassword) {
-		Admin admin = adminAuthRepository.findByAdmId(admId);
+		System.out.println("입력받은 Id: " + admId);
+		System.out.println("입력받은 pwd: " + admPassword);
+	    Admin admin = adminAuthRepository.findByAdmId(admId);
+	    
+	    // Admin 객체의 정보 출력
+	    if (admin != null) {
+	        System.out.println("Admin found: " + admin);
+	        System.out.println("Admin ID: " + admin.getAdmId());
+	        System.out.println("Admin Password: " + admin.getAdmPasswd());
+	    } else {
+	        System.out.println("No admin found with ID: " + admId);
+	    }
 
-        // 사용자가 존재하고 비밀번호가 일치하면 해당 사용자 객체를 반환, 그렇지 않으면 null 반환
-        if (admin != null && admin.getAdmPasswd().equals(admPassword)) {
-            return admin;
-        } else {
-            return null;
-        }
+	    if (admin != null && admin.getAdmPasswd().equals(admPassword)) {
+	        return admin;
+	    } else {
+	        return null;
+	    }
+	}
+
+	
+	@Override
+	public Admin getAdminById(String admId) {
+		return adminAuthRepository.findByAdmId(admId);
 	}
 }

@@ -20,7 +20,7 @@ public interface UserMypageRepository extends JpaRepository<Member, Long> {
     int updateMember(String memberId, String memberName, String memberPhone, String memberPassword, String memberEmail);
 
     @Modifying
-    @Query("UPDATE Member m SET m.memberId = NULL, m.memberName = '탈퇴회원', m.memberPhone = NULL, m.memberPassword = NULL, m.memberState='delete', m.kakaoId=NULL, m.kakaoConnectAt = NULL WHERE m.memberId = :memberId")
+    @Query("UPDATE Member m SET m.memberId = NULL, m.memberName = '탈퇴회원', m.memberPhone = NULL, m.memberPassword = NULL, m.memberState = 'delete', m.kakaoId = NULL, m.kakaoConnectAt = NULL, m.memberUpdateAt = CURRENT_TIMESTAMP WHERE m.memberId = :memberId")
     void nullifyUserData(@Param("memberId") String memberId);
 
 }

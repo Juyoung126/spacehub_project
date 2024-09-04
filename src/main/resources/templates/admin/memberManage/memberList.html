@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceHub 관리자</title>
+    
+    <link rel="stylesheet" href="/css/admin/memberManage/memberList.css">
 </head>
 <body>
-    <h1>회원 목록</h1>
+    <h1>회원 관리</h1>
+    <select id="status-filter">
+        <option value="all">All</option>
+        <option value="active">Active</option>
+        <option value="delete">Delete</option>
+    </select>
+
     <table>
         <thead>
             <tr>
@@ -14,14 +22,17 @@
                 <th>아이디</th>
                 <th>이름</th>
                 <th>이메일</th>
+                <th>상태</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="member : ${memberList}" th:attr="data-member-no=${member.memberNo}">
+            <tr th:each="member : ${memberList}" 
+                th:attr="data-member-no=${member.memberNo}, data-status=${member.memberState}">
                 <td th:text="${member.memberNo}">No</td>
                 <td th:text="${member.memberId}">ID</td>
                 <td class="goDetail" th:text="${member.memberName}">Name</td>
                 <td th:text="${member.memberEmail}">Email</td>
+                <td th:text="${member.memberState}">Status</td>
             </tr>
         </tbody>
     </table>

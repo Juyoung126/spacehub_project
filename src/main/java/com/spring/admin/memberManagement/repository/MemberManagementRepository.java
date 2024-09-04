@@ -8,4 +8,6 @@ import com.spring.client.domain.Member;
 
 public interface MemberManagementRepository extends JpaRepository<Member, Long>{
     List<Member> findAllByOrderByMemberNoAsc(); // memberNo를 기준으로 오름차순 정렬
+
+    Member findByMemberNo(Long memberNo); // memberNo로 Member 조회
 }

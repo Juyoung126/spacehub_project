@@ -7,7 +7,6 @@ import com.spring.client.domain.Member;
 public interface MemberManagementService {
 
 	List<Member> memberList(Member member);
-
-	Member memberDetail(Member member);
+	Member getMemberByMemberNo(Long memberNo);
 
 }
