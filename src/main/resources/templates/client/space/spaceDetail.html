@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Document</title>
-	</head>
-	<body>
-		<h1 th:text="name">SpaceDetail 상세페이지</h1>
-	</body>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Detail</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <link rel="stylesheet" href="/css/client/space/spaceDetail.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 th:text="${space.spName}">Space Name</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img th:src="@{${space.spMainImage}}" class="card-img-top" alt="Space Image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${space.spName}"></h5>
+<!--                         <p class="card-text">
+                            <strong>Description:</strong> <span th:text="${spaceDetail.spDescription}"></span><br>
+                            <strong>Equipment:</strong> <span th:text="${spaceDetail.spEquipment}"></span><br>
+                            <strong>Rules:</strong> <span th:text="${spaceDetail.spRules}"></span><br>
+                            <strong>Start Time:</strong> <span th:text="${spaceDetail.spStartTime}"></span><br>
+                            <strong>End Time:</strong> <span th:text="${spaceDetail.spEndTime}"></span>
+                        </p> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">공간 정보</h5>
+                        <p class="card-text">
+                            <strong>Capacity:</strong> <span th:text="${space.spCapacity}"></span><br>
+                            <strong>Hour Price:</strong> <span th:text="${space.spHourPrice}"></span><br>
+                            <strong>Keywords:</strong> <span th:text="${space.spKeyword}"></span><br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn btn-primary mt-3">모든 공간 보러 가기</a>
+        <a href="#" class="btn btn-primary mt-3">예약하러 가기</a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
