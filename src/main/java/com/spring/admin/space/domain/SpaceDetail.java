@@ -30,17 +30,17 @@ public class SpaceDetail {
 	
 	@Id
 	@Column(name = "sp_description")
-	private String spEquipment;		// 비치된 물품
+	private String spEquipment;
 	
 	@Id
 	@Column(name = "sp_description")
-	private String spRules;			// 이용 수칙
+	private String spRules;
 	
 	@Id
 	@Column(name = "sp_description")
-	private String spStartTime;		// 시작 시간
+	private String spStartTime;
 	
 	@Id
 	@Column(name = "sp_end_time")
-	private String spEndTime;		// 이용 시간 
+	private String spEndTime;
 }
