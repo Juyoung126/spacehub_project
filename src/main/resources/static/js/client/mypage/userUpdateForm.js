@@ -166,7 +166,7 @@ $(document).ready(function() {
 	}); 
 	
 	$("#cancelBtn").on("click", function(){
-		locationProcess("/admin/myPage");
+		locationProcess("/myPage");
 	});
 });
 
