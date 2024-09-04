@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100"
+	data-bs-theme="auto">
+<head>
+<th:block th:insert="~{template/client/fragments/block :: config}"></th:block>
+<meta name="theme-color" content="#712cf9">
+<link href="/css/client/payment/payment.css" rel="stylesheet">
+<link rel="canonical"
+	href="https://getbootstrap.kr/docs/5.3/examples/cover/">
+</head>
+<body>
+	<div>
+		<header>
+			<nav>
+				<th:block th:insert="~{template/client/fragments/block :: header}"></th:block>
+			</nav>
+		</header>
+
+		<main>
+			<div class=""></div>
+			<table></table>
+			<div class="content text-center">
+
+
+				<table class="table table-borderless">
+
+					<tr>
+						<td><button class="payment-button" data-method="basic">일반결제</button></td>
+						<td><button class="payment-button" data-method="mobile">휴대폰소액결제</button>
+					</tr>
+					<tr>
+						<td><button class="payment-button" data-method="kakao">카카오</button></td>
+					</tr>
+					<tr>
+						<td><button class="payment-button" data-method="toss">토스페이</button></td>
+					</tr>
+				</table>
+				<div></div>
+			</div>
+
+
+		</main>
+
+		<footer>
+			<nav>
+				<th:block th:insert="~{template/client/fragments/block :: footer}"></th:block>
+			</nav>
+		</footer>
+	</div>
+
+
+	<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+	<script src="/js/jquery-3.7.1.min.js"></script>
+	<script src="/js/common.js"></script>
+	<script src="/js/client/payment/payment.js"></script>
+</body>
+</html>

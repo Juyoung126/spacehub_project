@@ -32,7 +32,7 @@ public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "spacehub_reservation_generator")
     @Column(name = "r_no")
-    private Long rNo;
+    private Long resNo;
 
     @ManyToOne
     @JoinColumn(name = "member_no", nullable = false)
@@ -40,37 +40,41 @@ public class Reservation {
 
     @ManyToOne
     @JoinColumn(name = "sp_no", nullable = false)
-    private Space space;
+    private Space spNo;
 
-    @Column(name = "r_name", length = 20, nullable = false)
-    private String rName;
+    @Column(name = "r_name", length = 20, nullable = true)
+    private String resName;
 
     @Column(name = "r_date", nullable = false)
-    private LocalDateTime rDate;
+    private LocalDateTime resDate;
 
     @Column(name = "r_start_time", nullable = false)
-    private LocalDateTime rStartTime;
+    private LocalDateTime resStartTime;
 
     @Column(name = "r_use_time", nullable = false)
-    private LocalDateTime rUseTime;
+    private int resUseTime;
 
     @Column(name = "r_personnel", nullable = false)
-    private int rPersonnel;
+    private int resPersonnel;
 
     @Column(name = "r_request")
-    private String rRequest;
+    private String resRequest;
 
     @Column(name = "r_amount", nullable = false)
-    private int rAmount;
+    private int resAmount;
 
     @Column(name = "r_state", nullable = false)
-    private String rState;
+    private String resState;
 
     @CreationTimestamp
     @Column(name = "r_create_at", nullable = false)
-    private LocalDateTime rCreateAt;
+    private LocalDateTime resCreateAt;
 
     @UpdateTimestamp
     @Column(name = "r_update_at")
-    private LocalDateTime rUpdateAt;
+    private LocalDateTime resUpdateAt;
+    
+    public Member getMember() {
+        return member;
+    }
 }
