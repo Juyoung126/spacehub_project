@@ -7,14 +7,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>Space Hub</title>
-			
+			<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
 		<link rel="shortcut icon" href="/images/icon.png" />
 		<link rel="apple-touch-icon" href="/images/icon.png" />
-			
+		
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 		
 		<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" > -->
-		<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+		
 		<link type="text/css" rel="stylesheet" href="/css/common.css" />
 		<!-- Custom styles for this template -->
     	<link href="/css/client/sticky-footer-navbar.css" rel="stylesheet">
@@ -22,13 +22,13 @@
 	</th:block>
 	
 	<!-- 상단 navbar  -->
-	<th:block th:fragment="header">
-		<header class="top-bar">
-	        <div class="container">
-	            <a href="/" class="logo-link">
-                    <h1 class="logo">SpaceHub</h1>
+	<th:block th:fragment="shheader">
+		<header class="shtopbar">
+	        <div class="shcontainer">
+	            <a href="/" class="shlogolink">
+                    <h1 class="shlogo">SpaceHub</h1>
                 </a>
-	            <nav class="top-nav">
+	            <nav class="shtopnav">
 	                <ul>
 	                    <li><a href="/">홈</a></li>
 	                    <li><a href="/space">공간탐색</a></li>
@@ -45,16 +45,16 @@
 	
 	
 	<!-- footer  -->
-	<th:block th:fragment="footer">
+	<th:block th:fragment="shfooter">
 		<footer>
-	        <div class="container">
-	            <div class="footer-links">
+	        <div class="shcontainer">
+	            <div class="shfooterlinks">
 	                <a href="#">개인정보 처리방침</a>
 	                <a href="#">이용약관</a>
 	                <a href="#">사이트맵</a>
 	            </div>
 	            <p>&copy; 2024 SpaceHub. All rights reserved.</p>
-	            <div class="social-media">
+	            <div class="shsocialmedia">
 	                <a href="#"><img src="https://source.unsplash.com/random/24x24?facebook" alt="Facebook"></a>
 	                <a href="#"><img src="https://source.unsplash.com/random/24x24?twitter" alt="Twitter"></a>
 	                <a href="#"><img src="https://source.unsplash.com/random/24x24?instagram" alt="Instagram"></a>
