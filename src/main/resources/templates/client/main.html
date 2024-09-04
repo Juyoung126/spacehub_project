@@ -8,11 +8,9 @@
 	</head>
 	<body>
 	    <div>    
-	       
-	           
-	                <th:block th:insert="~{template/client/fragments/block :: header}"></th:block>
-	          
-	      
+	        <header class="mb-auto">
+	        	<th:block th:insert="~{template/client/fragments/block :: header}"></th:block>
+	        </header>
 	
 	        <main>
 			    <!-- 메인 이미지 섹션 -->
@@ -77,10 +75,11 @@
 	            
 	        </main>
 	        
-	        
-	         
+	        <footer>
+	            <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	                <th:block th:insert="~{template/client/fragments/block :: footer}"></th:block>
-	        
+	            </nav>
+	        </footer>
 	    </div>
 	    
 	    <script src="/assets/dist/js/bootstrap.bundle.min.js"></script>
