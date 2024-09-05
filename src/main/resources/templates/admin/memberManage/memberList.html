@@ -4,40 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceHub 관리자</title>
-    
     <link rel="stylesheet" href="/css/admin/memberManage/memberList.css">
 </head>
 <body>
+<div>
     <h1>회원 관리</h1>
-    <select id="status-filter">
-        <option value="all">All</option>
-        <option value="active">Active</option>
-        <option value="delete">Delete</option>
-    </select>
+    
+    <div id="memberSearch" class="my-2">
+        <form id="searchForm" th:action="@{/admin/memberManage}" method="get">
+            <input type="hidden" name="page" id="page" th:value="${memberList.current}">
+            <input type="hidden" name="size" id="size" th:value="${memberList.pageRequestDTO.size}">
+        </form>
+        <select id="status-filter">
+            <option value="all">All</option>
+            <option value="active">Active</option>
+            <option value="delete">Delete</option>
+        </select>
+    </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>상태</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="member : ${memberList}" 
-                th:attr="data-member-no=${member.memberNo}, data-status=${member.memberState}">
-                <td th:text="${member.memberNo}">No</td>
-                <td th:text="${member.memberId}">ID</td>
-                <td class="goDetail" th:text="${member.memberName}">Name</td>
-                <td th:text="${member.memberEmail}">Email</td>
-                <td th:text="${member.memberState}">Status</td>
-            </tr>
-        </tbody>
-    </table>
-    <script src="/js/jquery-3.7.1.min.js"></script>
-    <script src="/js/common.js"></script>
-    <script src="/js/admin/memberManage/memberList.js"></script>
+    <div class="member-table-height">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th class="col-md-2">No</th>
+                    <th class="col-md-4">아이디</th>
+                    <th class="col-md-2">이름</th>
+                    <th class="col-md-3">이메일</th>
+                    <th class="col-md-1">상태</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${#lists.size(memberList.dtoList) == 0}">
+                    <td colspan="5" class="text-center">등록된 회원이 존재하지 않습니다.</td>
+                </tr>
+                <th:block th:if="${not #strings.isEmpty(memberList.dtoList)}">
+                    <tr th:each="member : ${memberList.dtoList}" 
+                        th:attr="data-member-no=${member.memberNo}, data-status=${member.memberState}">
+                        <td th:text="${member.memberNo}">No</td>
+                        <td th:text="${member.memberId}">ID</td>
+                        <td class="goDetail" th:text="${member.memberName}">Name</td>
+                        <td th:text="${member.memberEmail}">Email</td>
+                        <td th:text="${member.memberState}">Status</td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Page navigation example">
+	    <ul class="pagination">
+	        <!-- 이전 페이지 버튼 -->
+	        <li class="page-item" th:classappend="${memberList.prev ? '' : 'disabled'}">
+	            <a th:href="@{/admin/memberManage(page=${memberList.prevPage})}" class="page-link" th:if="${memberList.prev}">Previous</a>
+	            <span th:if="${!memberList.prev}" class="page-link">Previous</span>
+	        </li>
+	
+	        <!-- 페이지 번호 출력 -->
+	        <li th:each="number : ${memberList.pageNumList}" th:classappend="'page-item ' + ${(memberList.current == number) ? 'active' : ''}">
+	            <a th:href="@{/admin/memberManage(page=${number})}" class="page-link" th:text="${number}"></a>
+	        </li>
+	
+	        <!-- 다음 페이지 버튼 -->
+	        <li class="page-item" th:classappend="${memberList.next ? '' : 'disabled'}">
+	            <a th:href="@{/admin/memberManage(page=${memberList.nextPage})}" class="page-link" th:if="${memberList.next}">Next</a>
+	            <span th:if="${!memberList.next}" class="page-link">Next</span>
+	        </li>
+	    </ul>
+	</nav>
+</div>
+
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin/memberManage/memberList.js"></script>
 </body>
 </html>

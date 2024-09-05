@@ -11,14 +11,13 @@ $(document).ready(function() {
         });
     });
 
+
     $(".goDetail").click(function() {
-        // 클릭한 행(tr)에서 memberNo를 가져옴
         let memberNo = $(this).closest("tr").data("memberNo");
-        // 현재 필터링된 상태에 맞는 행에서만 동작하도록 함
         let selectedStatus = $('#status-filter').val();
         let rowStatus = $(this).closest("tr").data("status");
         if (selectedStatus === 'all' || rowStatus === selectedStatus) {
-               locationProcess("/admin/memberManage/" + memberNo);
-    	}
-	});
+            window.location.href = "/admin/memberManage/" + memberNo;
+        }
+    });
 });
