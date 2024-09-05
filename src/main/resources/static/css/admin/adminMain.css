@@ -1,6 +1,8 @@
 .wrapper {
     display: flex;
     height: 100vh;
+    background-color:  #f8f9fa;
+	color: black;
 }
 
 /* 메인 콘텐츠 스타일 */
@@ -24,6 +26,7 @@ h2 {
 }
 
 .card {
+	color: black;
     background-color: white;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
