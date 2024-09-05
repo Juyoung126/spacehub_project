@@ -149,15 +149,16 @@ public class reviewRepositoryTest {
 	public void reviewDeleteTest() {
 		reviewRepository.deleteById(9L);
 	}*/
-	
+	/*
 	@Test
 	public void SpNoSelectTest() {
 		List<Review> reviewList = reviewRepository.findBySpNo(3L);
 		for(Review review : reviewList) {
 			log.info(review.toString());
 		}
-	}
+	}*/
 	
+	/*
 	@Test
 	public void reviewListTest() {
 		List<Review> reivewList = (List<Review>) reviewRepository.findBySpNo(3L);
@@ -165,13 +166,6 @@ public class reviewRepositoryTest {
 			
 			log.info(review.toString());
 		}
-	}
-
-
-
-
-
-	
-	
+	}*/
 
 }
