@@ -16,7 +16,8 @@ public class SpaceServiceImpl implements SpaceService {
 
 	@Setter(onMethod_ = @Autowired)
 	private SpaceRepository spaceRepository;
-	
+    
+    // Space 관련 메서드
 	@Override
 	public List<Space> spaceList(Space space) {
 		List<Space> spaceList = null;
