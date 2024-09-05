@@ -49,18 +49,25 @@ public class Admin {
 	@Column(name="adm_email",length=30)
 	private String admEmail;
 	
-	/* 사용자 상태 */
+	/* 관리자 상태 */
 	@Column(name="adm_state",length=10, nullable=false)
 	private String admState = "active";
 	
+	/* 관리자 전화번호 */
 	@Column(name = "adm_phone", length = 15)
     private String admPhone;
 	
+	/* 관리자 등록일 */
 	@CreationTimestamp
     @Column(name = "adm_created_at")
     @ColumnDefault(value = "sysdate")
     private LocalDateTime admCreatedAt;
 
+	/* 관리자 삭제일 */
     @Column(name = "adm_update_at")
     private LocalDateTime admUpdateAt;
+    
+    /* 최고권한 여부 */
+    @Column(name = "adm_super", length = 1, nullable=false)
+    private String admSuper = "N";
 }

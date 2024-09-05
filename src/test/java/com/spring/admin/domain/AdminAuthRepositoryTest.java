@@ -1,5 +1,6 @@
 package com.spring.admin.domain;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -15,5 +16,15 @@ public class AdminAuthRepositoryTest {
 	@Setter(onMethod_ = @Autowired)
 	private AdminAuthRepository adminAuthRepository;
 	
-	/* 로그인 처리 확인 */
+	@Test
+	public void userSignupTest() {
+		Admin admin = new Admin();
+		admin.setAdmId("superAdmin");
+		admin.setAdmName("박주영");
+		admin.setAdmEmail("superAdmin@spacehub.com");
+		admin.setAdmPasswd("superAdmin@22");
+		admin.setAdmPhone("010-1111-1111");
+		admin.setAdmSuper("Y");
+		adminAuthRepository.save(admin);
+	}
 }

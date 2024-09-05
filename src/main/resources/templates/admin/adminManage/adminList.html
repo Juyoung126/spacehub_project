@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceHub 관리자</title>
+    
+    <link rel="stylesheet" href="/css/admin/memberManage/memberList.css">
+</head>
+<body>
+    <h1>관리자 관리</h1>
+    <div>
+	    <select id="status-filter">
+	        <option value="all">전체</option>
+	        <option value="active">재직</option>
+	        <option value="delete">퇴사</option>
+	    </select>
+		<button type="button" style="display:none;" id="insertAdminBtn">신규관리자</button>
+	</div>        
+    <table>
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>아이디</th>
+                <th>이름</th>
+                <th>이메일</th>
+                <th>재직상태</th>
+                <th>최고권한</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="admin : ${adminList}" 
+                th:attr="data-admin-no=${admin.admNo}, data-status=${admin.admState}">
+                <td th:text="${admin.admNo}">No</td>
+                <td th:text="${admin.admId}">ID</td>
+                <td class="goDetail" th:text="${admin.admName}">Name</td>
+                <td th:text="${admin.admEmail}">Email</td>
+                <td th:text="${admin.admState}">Status</td>
+                <td th:text="${admin.admSuper}">Super</td>
+            </tr>
+        </tbody>
+    </table>
+        
+    <script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/admin/adminManage/adminList.js"></script>
+</body>
+</html>

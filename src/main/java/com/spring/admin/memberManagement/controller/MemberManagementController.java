@@ -1,7 +1,6 @@
 package com.spring.admin.memberManagement.controller;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.admin.memberManagement.service.MemberManagementService;
 import com.spring.client.domain.Member;
+import com.spring.common.vo.PageRequestDTO;
+import com.spring.common.vo.PageResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -27,14 +29,25 @@ public class MemberManagementController {
 	 * 검색 기능 및 페이징 처리 제외
 	 * @param member
 	 * @return 
-	 */
+	 *
     @GetMapping
     public String memberList(Member member, Model model) {
     	List<Member> memberList = memberManagementService.memberList(member);
     	model.addAttribute("memberList", memberList);
     	
         return "admin/memberManage/memberList"; 
-    }    
+    } */
+	
+	@GetMapping
+	public String memberList(@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
+		PageRequestDTO pageRequestDTO = new PageRequestDTO();
+        pageRequestDTO.setPage(page);
+        
+	    PageResponseDTO<Member> memberList = memberManagementService.list(pageRequestDTO);
+	    model.addAttribute("memberList", memberList);
+	    
+	    return "admin/memberManage/memberList";
+	}
     
     /* 고객별 상세 페이지 */
     @GetMapping("/{memberNo}")

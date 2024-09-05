@@ -3,6 +3,7 @@ package com.spring.client.auth.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,12 @@ import lombok.RequiredArgsConstructor;
 public class UserAuthController {
 
     private final UserAuthService userAuthService;
+    @Value("${kakao.client-id}")
+    private String clientId;
+
+    @Value("${kakao.redirect-uri}")
+    private String redirectUri;
+
 
     /**
      * 회원가입 페이지 반환
@@ -85,13 +92,17 @@ public class UserAuthController {
     public String signupSuccess() {
         return "client/auth/signupSuccess";
     }
-
+    
     /**
      * 로그인 페이지 반환
+     * @param 카카오 로그인 링크 정보
      * @return 로그인 페이지 뷰 이름
      */
     @GetMapping("/login")
     public String userLoginForm() {
+//	public String userLoginForm(Model model) {
+//    	String location = "https://kauth.kakao.com/oauth/authorize?response_type=code&client_id="+clientId+"&redirect_uri="+redirectUri;
+//    	model.addAttribute("location", location);
         return "client/auth/userLoginForm";
     }
 
@@ -114,7 +125,25 @@ public class UserAuthController {
         }
         return response;
     }
+    /*
+    @GetMapping("/auth/kakao/callback")
+    public RedirectView kakaoCallback(@RequestParam String code, HttpSession session) {
+        // 인증 코드로 액세스 토큰을 얻음
+        String accessToken = userAuthService.getKakaoAccessToken(code);
 
+        // 액세스 토큰으로 사용자 정보를 얻음
+        KakaoUser kakaoUser = userAuthService.getKakaoUserInfo(accessToken);
+
+        // 사용자 정보를 통해 회원 가입 처리
+        boolean isRegistered = userAuthService.registerKakaoUser(kakaoUser);
+        if (isRegistered) {
+            session.setAttribute("loggedInUser", kakaoUser.getId());
+            return new RedirectView("/"); // 로그인 후 메인 페이지로 리디렉션
+        } else {
+            return new RedirectView("/auth/signupFailure"); // 회원 가입 실패 페이지로 리디렉션
+        }
+    }
+*/
     /**
      * 로그인 상태 확인
      * @param session HTTP 세션 객체

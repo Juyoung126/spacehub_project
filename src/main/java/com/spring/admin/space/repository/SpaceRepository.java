@@ -44,7 +44,7 @@ public interface SpaceRepository extends JpaRepository<Space, Long>{
 	@Query("UPDATE Space b set b.spHit = b.spHit+1 WHERE b.spNo = ?1")
 	void spaceHitUpdate(Long spNo);
 	
-	//주석
+	
 	//spNo, admNo, spName, spCapacity, spHourPrice, spKeyword, spMainImage(null)
 }
 

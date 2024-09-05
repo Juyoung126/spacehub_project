@@ -1,11 +1,18 @@
 package com.spring.admin.memberManagement.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.spring.admin.memberManagement.repository.MemberManagementRepository;
 import com.spring.client.domain.Member;
+import com.spring.common.vo.PageRequestDTO;
+import com.spring.common.vo.PageResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,4 +30,18 @@ public class MemberManagementServiceImpl implements MemberManagementService {
     public Member getMemberByMemberNo(Long memberNo) {
         return memberManagementRepository.findByMemberNo(memberNo); // memberNo로 조회
     }
+    
+    @Override
+	public PageResponseDTO<Member> list(PageRequestDTO pageRequestDTO) {
+		 Pageable pageable = PageRequest.of(
+				  pageRequestDTO.getPage() - 1, // 1페이지가 0이므로 주의
+				  pageRequestDTO.getSize(), Sort.by("memberNo").descending());
+		 Page<Member> result = memberManagementRepository.findAll(pageable);
+		 List<Member> memberList = result.getContent().stream().collect(Collectors.toList());
+		 long totalCount = result.getTotalElements();
+		 PageResponseDTO<Member> responseDTO = PageResponseDTO.<Member>withAll().dtoList(memberList)
+				 .pageRequestDTO(pageRequestDTO).totalCount(totalCount).build();
+				 
+		return responseDTO;
+	}
 }

@@ -64,5 +64,6 @@ $("#login-btn").on("click", function(){
 
 // Kakao 로그인 버튼 처리
 $("#kakao-btn").on("click", function() {
-    // Kakao 로그인 관련 로직 추가
+	/*var kakaoLoginUrl = $(this).data("kakao-url");
+    window.location.href = kakaoLoginUrl;*/
 });
