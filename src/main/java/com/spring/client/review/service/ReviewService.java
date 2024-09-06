@@ -7,6 +7,8 @@ import com.spring.client.review.domain.Review;
 public interface ReviewService {
 	
     List<Review> findBySpNo(Long spNo);
+    
+    List<Review> findByResNo(Long resNo);
 
     
 	/* 리뷰 리스트 */

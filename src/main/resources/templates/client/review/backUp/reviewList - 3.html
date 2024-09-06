@@ -1,3 +1,5 @@
+<!-- memberId, reservationInd 추적 추가 -->
+<!-- 평점 추가 -->
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -7,7 +9,7 @@
     <th:block th:fragment="content">
         <!-- 리뷰 목록 및 폼 -->
         <form id="reviewForm" method="post">
-            <input type="hidden" name="spaceId" id="spaceId" value="1" />
+         <input type="hidden" name="spaceId" id="spaceId" value="1" />
             <input type="hidden" name="id" id="id" value="0" />
             <input type="hidden" name="memberId" id="memberId" value="" />
             <input type="hidden" name="resNo" id="resNo" value="4" /> <!-- resNo 숨겨진 필드 추가 -->
@@ -87,4 +89,3 @@
     </th:block>
 </body>
 </html>
-

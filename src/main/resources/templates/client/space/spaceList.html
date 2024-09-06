@@ -43,7 +43,8 @@
             </div>
         </div>
     </div>
-
+	    		<div th:replace="~{'client/review/reviewList' :: content}"></div>
+	
     <th:block th:insert="~{template/client/fragments/block :: footer}"></th:block>
 
     <!-- 스크립트 블록 -->

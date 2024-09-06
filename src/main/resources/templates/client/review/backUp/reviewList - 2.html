@@ -1,3 +1,5 @@
+<!-- memberId, reservationInd 추적 추가 -->
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -24,37 +26,11 @@
                     <textarea name="revContent" id="revContent" class="form-control" rows="3"></textarea>
                 </div>
             </div>
-            <div class="row mb-3">
-                <label for="revScore" class="col-sm-1 col-form-label">평점</label>
-                <div class="col-sm-11">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="revScore" id="score1" value="1">
-                        <label class="form-check-label" for="score1">1</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="revScore" id="score2" value="2">
-                        <label class="form-check-label" for="score2">2</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="revScore" id="score3" value="3">
-                        <label class="form-check-label" for="score3">3</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="revScore" id="score4" value="4">
-                        <label class="form-check-label" for="score4">4</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="revScore" id="score5" value="5">
-                        <label class="form-check-label" for="score5">5</label>
-                    </div>
-                </div>
-            </div>
         </form>
         <div id="reviewList">
             <div id="item-template" class="card mb-3" style="display: none;" data-id="${review.id}">
                 <div class="card-header">
                     <span class="name"></span>
-                    <span class="score"></span> <!-- 평점 표시 -->
                     <span class="cdate float-right"></span>
                 </div>
                 <div class="card-body">

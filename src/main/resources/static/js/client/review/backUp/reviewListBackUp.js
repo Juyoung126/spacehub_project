@@ -1,6 +1,5 @@
 //<!-- memberId, reservationInd 추적 추가 -->
 
-//탬플릿 평점 추가
 
 $(document).ready(function() {
     // 날짜 형식 함수 추가
@@ -38,23 +37,20 @@ $(document).ready(function() {
         return true;
     };
 
-    
-	// 리뷰 템플릿 함수
-	const template = (data) => {
-	    let $div = $('#reviewList');
-	    let $element = $('#item-template').clone().removeAttr('id').show(); // 요소를 복제하고 표시
-	    $element.attr("data-id", data.revNo);
-	    $element.addClass("review");
-	    $element.find('.name').text(data.member.memberName); // memberName 참조
-	    $element.find('.score').text("평점: " + data.revScore); // 평점 표시
-	    $element.find('.cdate').text(getDateFormat(new Date(data.revDate)));
-	    let body = data.revContent;
-	    body = body.replace(/(\r\n|\r|\n)/g, "<br />");
-	    $element.find('.card-text').html(body);
-	    $div.append($element); 
-	    console.log("Review added:", $element); // 콘솔 로그 추가
-	};
-
+    // 리뷰 템플릿 함수
+    const template = (data) => {
+        let $div = $('#reviewList');
+        let $element = $('#item-template').clone().removeAttr('id').show(); // 요소를 복제하고 표시
+        $element.attr("data-id", data.revNo);
+        $element.addClass("review");
+        $element.find('.name').text(data.member.memberName); // memberName 참조
+        $element.find('.cdate').text(getDateFormat(new Date(data.revDate)));
+        let body = data.revContent;
+        body = body.replace(/(\r\n|\r|\n)/g, "<br />");
+        $element.find('.card-text').html(body);
+        $div.append($element); 
+        console.log("Review added:", $element); // 콘솔 로그 추가
+    };
 
     // 폼 데이터 초기화 함수
     const dataReset = () => {
@@ -84,10 +80,7 @@ $(document).ready(function() {
 	$(document).off("click", "#reviewInsertBtn").on("click", "#reviewInsertBtn", function(){ 
 	    if (!checkForm("#member","작성자를")) return; 
 	    else if (!checkForm("#revContent","내용을")) return;
-	    else if (!$("input[name='revScore']:checked").val()) {
-	        alert("평점을 선택해 주세요.");
-	        return;
-	    } else {
+	    else {
 	        // 버튼 비활성화
 	        $(this).prop("disabled", true);
 	        $.ajax({
@@ -104,8 +97,7 @@ $(document).ready(function() {
 	                },
 	                reservation: {
 	                    resNo: $("#resNo").val() // 숨겨진 필드에서 resNo 값 가져오기
-	                },
-	                revScore: $("input[name='revScore']:checked").val() // 선택된 평점 값 가져오기
+	                }
 	            }),
 	            dataType: "json"
 	        }).done(function(data){    
@@ -124,6 +116,7 @@ $(document).ready(function() {
 	        });    
 	    }
 	});
+
 
     // 리뷰 삭제
     $(document).off("click", ".reviewDeleteBtn").on("click", ".reviewDeleteBtn", function(e){ 
@@ -285,6 +278,7 @@ $(document).ready(function() {
 					        } 
 					    });
 					});
+
 
 
 
