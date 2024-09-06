@@ -1,7 +1,6 @@
 package com.spring.admin.adminManagement.controller;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.admin.adminManagement.service.AdminManagementService;
 import com.spring.admin.domain.Admin;
+import com.spring.common.vo.PageRequestDTO;
+import com.spring.common.vo.PageResponseDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,17 +28,27 @@ public class AdminManagementController {
 	
 	/**
 	 * 검색 기능 및 페이징 처리 제외
-	 * @param member
+	 * @param admin
 	 * @return 
-	 */
+	 *
     @GetMapping
-    public String memberList(Admin admin, Model model) {
+    public String adminList(Admin admin, Model model) {
     	List<Admin> adminList = adminManagementService.adminList(admin);
     	model.addAttribute("adminList", adminList);
     	
         return "admin/adminManage/adminList"; 
     }    
-    
+    */
+	@GetMapping
+	public String adminList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
+	    pageRequestDTO.setPage(page);
+	    
+	    PageResponseDTO<Admin> adminList = adminManagementService.list(pageRequestDTO);
+	    model.addAttribute("adminList", adminList);
+	    
+	    return "admin/adminManage/adminList";
+	}
     /* 관리자별 상세 페이지 */
     @GetMapping("/{admNo}")
     public String memberDetail(@PathVariable Long admNo, Model model) {

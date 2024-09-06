@@ -68,6 +68,6 @@ public class AdminAuthController {
     @PostMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); 
-        return "redirect:/admin/auth/login"; 
+        return "redirect:/admin"; 
     }
 }

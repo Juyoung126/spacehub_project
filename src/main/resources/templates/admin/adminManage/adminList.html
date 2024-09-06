@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpaceHub 관리자</title>
-    
     <link rel="stylesheet" href="/css/admin/memberManage/memberList.css">
 </head>
 <body>
@@ -15,32 +14,64 @@
 	        <option value="active">재직</option>
 	        <option value="delete">퇴사</option>
 	    </select>
-		<button type="button" style="display:none;" id="insertAdminBtn">신규관리자</button>
-	</div>        
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>아이디</th>
-                <th>이름</th>
-                <th>이메일</th>
-                <th>재직상태</th>
-                <th>최고권한</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="admin : ${adminList}" 
-                th:attr="data-admin-no=${admin.admNo}, data-status=${admin.admState}">
-                <td th:text="${admin.admNo}">No</td>
-                <td th:text="${admin.admId}">ID</td>
-                <td class="goDetail" th:text="${admin.admName}">Name</td>
-                <td th:text="${admin.admEmail}">Email</td>
-                <td th:text="${admin.admState}">Status</td>
-                <td th:text="${admin.admSuper}">Super</td>
-            </tr>
-        </tbody>
-    </table>
-        
+	    <button type="button" id="insertAdminBtn">신규관리자</button>
+	</div>
+    
+    <div class="admin-table-height">
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>아이디</th>
+                    <th>이름</th>
+                    <th>이메일</th>
+                    <th>재직상태</th>
+                    <th>최고권한</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 관리자 목록을 출력하는 부분 -->
+			    <tr th:each="admin : ${adminList.dtoList}" 
+			        th:attr="data-admin-no=${admin.admNo}, data-status=${admin.admState}, data-id=${admin.admId}, data-email=${admin.admEmail}">
+			        <td th:text="${admin.admNo}">No</td>
+			        <td class="adminId" th:text="${admin.admId}">ID</td>
+			        <td class="goDetail" th:text="${admin.admName}">Name</td>
+			        <td class="adminEmail" th:text="${admin.admEmail}">Email</td>
+			        <td th:text="${admin.admState}">Status</td>
+			        <td th:text="${admin.admSuper}">Super</td>
+			    </tr>
+			    <!-- 관리자 목록이 없을 때 표시되는 메시지 -->
+			    <tr th:if="${#lists.size(adminList.dtoList) == 0}">
+			        <td colspan="6" class="text-center">등록된 관리자가 없습니다.</td>
+			    </tr>
+			</tbody>
+        </table>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <nav aria-label="Page navigation example">
+	    <ul class="pagination">
+	        <!-- 이전 페이지 버튼 -->
+	        <li class="page-item" th:classappend="${adminList.prev ? '' : 'disabled'}">
+	            <a th:href="@{/admin/adminManage(page=${adminList.prevPage})}" class="page-link" th:if="${adminList.prev}">Previous</a>
+	            <span th:if="${!adminList.prev}" class="page-link">Previous</span>
+	        </li>
+	
+	        <!-- 페이지 번호 출력 -->
+	        <li th:each="number : ${adminList.pageNumList}" 
+	            th:classappend="'page-item ' + ${(adminList.current == number) ? 'active' : ''}">
+	            <a th:href="@{/admin/adminManage(page=${number})}" class="page-link" th:text="${number}"></a>
+	        </li>
+	
+	        <!-- 다음 페이지 버튼 -->
+	        <li class="page-item" th:classappend="${adminList.next ? '' : 'disabled'}">
+	            <a th:href="@{/admin/adminManage(page=${adminList.nextPage})}" class="page-link" th:if="${adminList.next}">Next</a>
+	            <span th:if="${!adminList.next}" class="page-link">Next</span>
+	        </li>
+	    </ul>
+	</nav>
+
+    <!-- JS 파일 추가 -->
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/common.js"></script>
     <script src="/js/admin/adminManage/adminList.js"></script>

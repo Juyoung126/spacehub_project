@@ -1,6 +1,24 @@
 let isIdVerified = false; // 아이디 인증 상태 변수
 let isEmailVerified = false; // 이메일 인증 상태 변수
 
+$(function(){
+    function addHyphenToPhoneNumber(phoneNumberInput) {
+        const phoneNumber = phoneNumberInput.value;
+        const length = phoneNumber.length;
+
+        if(length >= 9) {
+            let numbers = phoneNumber.replace(/[^0-9]/g, "")
+                     .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+            phoneNumberInput.value = numbers;
+        }
+    }
+
+    const phoneInput = document.getElementById("memberPhone");
+    phoneInput.addEventListener("input", () => {
+        addHyphenToPhoneNumber(phoneInput);
+    });
+});
+
 // 아이디 중복 확인 버튼 클릭 시
 $("#idCheckBtn").on("click", function () {
     const memberId = $("#memberId").val();
