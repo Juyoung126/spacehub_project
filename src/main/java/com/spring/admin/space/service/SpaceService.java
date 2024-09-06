@@ -7,7 +7,7 @@ import com.spring.admin.space.domain.Space;
 public interface SpaceService {
 	public List<Space> spaceList(Space space);
 
-	public Space spaceDetail(Space space);
+	public Space spaceContent(Space space);
 
 	public Space getSpace(Long spNo);
 
@@ -17,6 +17,8 @@ public interface SpaceService {
 
 	void spaceHitUpdate(Space space);
 
-	public void spaceInsert(Space space);
+	public void spaceSave(Space space);
+
+	public Space getSpaceById(Long spNo);
 
 }

@@ -1,0 +1,93 @@
+/* adminSpaceDetail.css */
+
+/* 기본 스타일 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #000;
+}
+
+/* 전체 레이아웃을 Flexbox로 설정 */
+.wrapper {
+    display: flex;
+    min-height: 100vh; /* 전체 화면 높이 */
+}
+
+/* 메인 콘텐츠 영역 스타일 */
+.main-content {
+    flex: 1; /* 남은 공간을 차지하도록 설정 */
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+/* 헤더 스타일 */
+header {
+    margin-bottom: 30px;
+}
+
+header h2 {
+    font-size: 24px;
+}
+
+/* 폼 스타일 */
+form {
+    margin-top: 20px;
+}
+
+.space-details {
+    margin-bottom: 30px;
+}
+
+.space-info {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.space-info th, .space-info td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+.space-info th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+/* 체크박스 그룹 스타일 */
+.checkbox-group {
+    margin: 20px 0;
+}
+
+.checkbox-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+/* 버튼 섹션 스타일 */
+.button-section {
+    margin-top: 30px;
+}
+
+.button-section a,
+.button-section button {
+    padding: 15px 20px;
+    text-decoration: none;
+    color: #fff;
+    border: none;
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 이미지 스타일 */
+.space-images {
+    margin-top: 30px;
+}
+
+.space-images img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}

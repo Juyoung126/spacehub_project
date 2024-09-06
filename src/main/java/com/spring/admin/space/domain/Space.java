@@ -38,7 +38,7 @@ public class Space {
     @Column(name = "sp_hour_price", nullable = false)
     private Long spHourPrice;	// 시간당 가격
 
-    @Column(name = "sp_keyword", nullable = false)
+    @Column(name = "sp_keyword")
     private String spKeyword;	// 이용 목적 키워드
 
     @Column(name = "sp_main_image")

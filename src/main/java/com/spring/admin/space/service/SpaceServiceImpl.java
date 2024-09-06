@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.admin.space.domain.Space;
 import com.spring.admin.space.repository.SpaceRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.Setter;
 
 @Service
@@ -23,6 +24,8 @@ public class SpaceServiceImpl implements SpaceService {
 		List<Space> spaceList = null;
 		spaceList = (List<Space>) spaceRepository.findAll();
 		return spaceList;
+		//안에 3줄을 리턴 한 줄로 줄일 수 있음
+		//return (List<Space>) spaceRepository.findAll();
 	}
 	
 	@Override
@@ -34,17 +37,18 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 	
 	@Override
-	public Space spaceDetail(Space space) {
+	public Space spaceContent(Space space) {
 //		spaceHitUpdate(space);
 		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
-		Space detail = spaceOptional.get();
-		return detail;
+		Space content = spaceOptional.get();
+		return content;
 	}
 
 	@Override
 	public Space getSpace(Long spNo) {
 		Optional<Space> spaceOptional = spaceRepository.findById(spNo);
-		Space updateData = spaceOptional.orElseThrow();
+		Space updateData = spaceOptional.get();
+		//Space updateData = spaceOptional.findByID(spNo).orElseThrow(()-> new IllegalArgumentException("해당 공간이 없습니다. ID: " + spNO));
 		return updateData;
 	}
 
@@ -67,8 +71,14 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 	@Override
-	public void spaceInsert(Space space) {
+	public void spaceSave(Space space) {
 		spaceRepository.save(space);
 	}
+
+	@Override
+	public Space getSpaceById(Long spNo) {
+		return spaceRepository.findById(spNo)
+	            .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + spNo));
+	    }
 
 }

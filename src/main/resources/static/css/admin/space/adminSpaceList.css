@@ -12,14 +12,6 @@ body {
     height: 100vh;
 }
 
-/* 관리자 네비게이션 */
-.admin-nav {
-    width: 250px; /* 네비게이션 바 너비 설정 */
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-}
-
 /* 메인 콘텐츠 영역 */
 .main-content {
     flex: 1;

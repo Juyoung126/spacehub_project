@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.spring.admin.space.domain.Space;
 import com.spring.admin.space.service.SpaceService;
 
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 	
 	@Setter(onMethod_ = @Autowired)
@@ -32,5 +34,5 @@ public class MainController {
 		
 		return "client/space/spaceList";
 	}
-	
+
 }

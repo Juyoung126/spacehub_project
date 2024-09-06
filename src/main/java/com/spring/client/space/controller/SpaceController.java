@@ -10,19 +10,29 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.admin.space.domain.Space;
+import com.spring.admin.space.domain.SpaceDetail;
+import com.spring.admin.space.domain.SpaceImg;
+import com.spring.admin.space.service.SpaceDetailService;
+import com.spring.admin.space.service.SpaceImgService;
 import com.spring.admin.space.service.SpaceService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Controller
-@RequestMapping("/space/*")
+@RequestMapping("/space")
 @RequiredArgsConstructor
 public class SpaceController {
 	
 	@Setter(onMethod_ = @Autowired)
 	private SpaceService spaceService;
 
+	@Setter(onMethod_ = @Autowired)
+	private SpaceDetailService spaceDetailService;
+	
+	@Setter(onMethod_ = @Autowired)
+	private SpaceImgService spaceImgService;
+	
 	// 공간 리스트 조회
 	@GetMapping("/spaceList")
 	public String spaceList(Space space, Model model) {
@@ -32,16 +42,17 @@ public class SpaceController {
 		return "client/space/spaceList";
 	}
 	
-	// 공간 상세 조회
 	@GetMapping("/{spNo}")
-	public String spaceDetail(@PathVariable Long spNo, Space space, Model model) {
-		space.setSpNo(spNo);
-		Space detail = spaceService.spaceDetail(space);
-		model.addAttribute("detail", detail);
-		
-		String newLine = System.getProperty("line.separator").toString();
-		model.addAttribute("newLine", newLine);
-		
-		return "client/space/spaceDetail";
-	}
+    public String spaceDetail(@PathVariable Long spNo, Model model) {
+        Space space = spaceService.getSpaceById(spNo);
+        SpaceDetail spaceDetail = spaceDetailService.getSpaceDetailBySpaceId(spNo);
+        List<SpaceImg> spaceImgs = spaceImgService.getSpaceImgsBySpaceId(spNo);
+        
+        model.addAttribute("space", space);
+        model.addAttribute("spaceDetail", spaceDetail);
+        model.addAttribute("spaceImgs", spaceImgs);
+        
+        return "client/space/spaceDetail";
+    }
+	
 }

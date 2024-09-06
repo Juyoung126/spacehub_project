@@ -40,9 +40,9 @@
 		                    <div class="form-group">
 		                        <label>공간 키워드</label>
 		                        <div class="checkbox-group">
-		                            <label><input type="checkbox" name="spKeyword" value="회의" th:field="*{spKeyword}"> 회의</label>
-		                            <label><input type="checkbox" name="spKeyword" value="세미나" th:field="*{spKeyword}"> 세미나</label>
-		                            <label><input type="checkbox" name="spKeyword" value="워크숍" th:field="*{spKeyword}"> 워크숍</label>
+		                            <label><input type="checkbox" name="spKeyword" value="회의" th:field="*{space.spKeyword}"> 회의</label>
+		                            <label><input type="checkbox" name="spKeyword" value="세미나" th:field="*{space.spKeyword}"> 세미나</label>
+		                            <label><input type="checkbox" name="spKeyword" value="워크숍" th:field="*{space.spKeyword}"> 워크숍</label>
 		                            <!-- 추가적인 키워드 옵션을 여기에 추가하세요 -->
 		                        </div>
 		                    </div>
@@ -51,9 +51,9 @@
 		                    <div class="form-group">
 		                        <label>비치된 물품</label>
 		                        <div class="checkbox-group">
-		                            <label><input type="checkbox" name="spEquipment" value="프로젝터" th:field="*{spEquipment}"> 프로젝터</label>
-		                            <label><input type="checkbox" name="spEquipment" value="화이트보드" th:field="*{spEquipment}"> 화이트보드</label>
-		                            <label><input type="checkbox" name="spEquipment" value="스피커" th:field="*{spEquipment}"> 스피커</label>
+		                            <label><input type="checkbox" name="spEquipment" value="프로젝터" th:field="*{spDetail.spEquipment}"> 프로젝터</label>
+		                            <label><input type="checkbox" name="spEquipment" value="화이트보드" th:field="*{spDetail.spEquipment}"> 화이트보드</label>
+		                            <label><input type="checkbox" name="spEquipment" value="스피커" th:field="*{spDetail.spEquipment}"> 스피커</label>
 		                            <!-- 추가적인 물품 옵션을 여기에 추가하세요 -->
 		                        </div>
 		                    </div>
@@ -65,6 +65,11 @@
 		                            <button type="button" name="spEndTime" value="1시간">1시간</button>
 		                            <button type="button" name="spEndTime" value="2시간">2시간</button>
 		                            <button type="button" name="spEndTime" value="3시간">3시간</button>
+		                            <button type="button" name="spEndTime" value="3시간">4시간</button>
+		                            <button type="button" name="spEndTime" value="3시간">5시간</button>
+		                            <button type="button" name="spEndTime" value="3시간">6시간</button>
+		                            <button type="button" name="spEndTime" value="3시간">7시간</button>
+		                            <button type="button" name="spEndTime" value="3시간">8시간</button>
 		                        </div>
 		                    </div>
 		

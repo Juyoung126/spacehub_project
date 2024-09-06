@@ -28,7 +28,7 @@
 	
 	                    <div class="col item" th:each="space : ${spaceList}">
 	                        <div class="card">
-	                            <a th:href="@{'/space/' + ${space.spNo}}" class="space-link">
+	                            <a th:href="@{'/admin/space/' + ${space.spNo}}" class="space-link">
 	                                <img th:src="${space.spMainImage}" alt="공간 이미지" class="card-img">
 	                            </a>
 	                            <div class="card-body">

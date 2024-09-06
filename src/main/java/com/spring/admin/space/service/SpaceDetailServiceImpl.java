@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.admin.space.domain.SpaceDetail;
 import com.spring.admin.space.repository.SpaceDetailRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,24 +26,24 @@ public class SpaceDetailServiceImpl implements SpaceDetailService {
 	}
 
 	@Override
-	public void spaceDetailInsert(SpaceDetail spaceDetail) {
-		spaceDetailRepository.save(spaceDetail);	
+	public void spaceDetailSave(SpaceDetail spaceDetail) {
+		spaceDetailRepository.save(spaceDetail);
 	}
 	
 	@Override	// 상세페이지
-	public SpaceDetail spaceDetailExplanation(SpaceDetail spaceDetail) {
+	public SpaceDetail spaceDetailContent(SpaceDetail spaceDetail) {
 		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findById(spaceDetail.getSpDetail());
-		SpaceDetail description = spaceDetailOptional.get();
-		return description;
+		SpaceDetail content = spaceDetailOptional.get();
+		return content;
 	}
 
 	@Override
-	public SpaceDetail spaceDetailUpdateForm(SpaceDetail spaceDetail) {
-		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findById(spaceDetail.getSpDetail());
-		SpaceDetail updateData = spaceDetailOptional.get();
+	public SpaceDetail getSpaceDetail(Long spDetail) {
+		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findById(spDetail);
+		SpaceDetail updateData = spaceDetailOptional.orElseThrow();
 		return updateData;
 	}
-
+	
 	@Override
 	public void spaceDetailUpdate(SpaceDetail spaceDetail) {
 		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findById(spaceDetail.getSpDetail());
@@ -60,6 +61,12 @@ public class SpaceDetailServiceImpl implements SpaceDetailService {
 	public void spaceDetailDelete(SpaceDetail spaceDetail) {
 		spaceDetailRepository.deleteById(spaceDetail.getSpDetail());	
 	}
+
+	@Override
+	 public SpaceDetail getSpaceDetailBySpaceId(Long spNo) {
+        return spaceDetailRepository.findBySpaceSpNo(spNo)
+            .orElseThrow(() -> new EntityNotFoundException("SpaceDetail not found for space id " + spNo));
+    }
 
 }
 
