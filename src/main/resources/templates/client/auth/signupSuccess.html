@@ -1,45 +1,27 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" class="h-100" data-bs-theme="auto">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <th:block th:insert="~{template/client/fragments/block :: config}"></th:block>
+    <meta name="theme-color" content="#712cf9">
     <title>SpaceHub</title>
+    <link href="/css/client/main.css" rel="stylesheet">
+    <link rel="canonical" href="https://getbootstrap.kr/docs/5.3/examples/cover/">
     <link rel="stylesheet" href="/css/client/auth/signupForm.css" />
-    <style>
-        .nav-dots {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .dot {
-            height: 12px;
-            width: 12px;
-            margin: 0 5px;
-            background-color: #ccc;
-            border-radius: 50%;
-            display: inline-block;
-        }
-
-        .dot.active {
-            background-color: #800080;
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="nav-dots">
-            <span class="dot"></span>
-            <span class="dot active"></span>
+<body class="d-flex flex-column h-100">
+    <header th:insert="~{template/client/fragments/block :: header}"></header>
+    <main class="flex-shrink-0 mt-5">
+        <div class="container-signupForm">
+            <h2>회원가입이 완료되었습니다!<br /><br /><br /></h2>
+	
+	        <div class="form-actions">
+	            <button type="button" class="button" id="userLoginFormBtn">로그인 화면으로 이동</button>
+	        </div>
         </div>
+    </main>
 
-        <h2>회원가입이 완료되었습니다!</h2>
+    <footer th:insert="~{template/client/fragments/block :: footer}" class="mt-auto"></footer>
 
-        <div class="form-actions">
-            <button id="userLoginFormBtn">로그인 화면으로 이동</button>
-        </div>
-    </div>
-    
     <script src="/js/jquery-3.7.1.min.js"></script>
     <script src="/js/common.js"></script>
     <script>

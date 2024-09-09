@@ -31,3 +31,7 @@ $("#signupBtn").on("click", function () {
     }
     actionProcess("#signupForm", "post", "/admin/adminManage/insertAdmin");
 });
+
+$("#cancelBtn").on("click", function(){
+	locationProcess("/admin/adminManage");
+});

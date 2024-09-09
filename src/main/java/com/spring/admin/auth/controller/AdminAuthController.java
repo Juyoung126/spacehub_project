@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.admin.auth.service.AdminAuthService;
@@ -70,4 +71,20 @@ public class AdminAuthController {
         session.invalidate(); 
         return "redirect:/admin"; 
     }
+    
+    /**
+     * 회원 탈퇴 처리
+     * @param session HTTP 세션
+     * @return 탈퇴 결과 메시지
+    */
+    @PostMapping("/deleteAdmin")
+    public ResponseEntity<String> deleteAdmin(@RequestParam("admId") String admId) {
+        if (admId != null) {
+        	adminAuthService.nullifyAdminData(admId); // 관리자 정보 null로 설정
+        	return ResponseEntity.ok("DELETED"); // 삭제 성공
+        } else {
+            return ResponseEntity.status(401).body("ERROR"); // 로그인 세션 없음
+        }
+    }
+    
 }

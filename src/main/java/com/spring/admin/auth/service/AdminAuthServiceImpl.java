@@ -2,6 +2,7 @@ package com.spring.admin.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.admin.auth.repository.AdminAuthRepository;
 import com.spring.admin.domain.Admin;
@@ -38,5 +39,11 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 	@Override
 	public Admin getAdminById(String admId) {
 		return adminAuthRepository.findByAdmId(admId);
+	}
+
+    @Transactional
+    @Override
+	public void nullifyAdminData(String admId) {
+    	adminAuthRepository.nullifyAdminData(admId);
 	}
 }

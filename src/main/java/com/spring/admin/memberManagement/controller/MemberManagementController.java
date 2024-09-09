@@ -3,14 +3,17 @@ package com.spring.admin.memberManagement.controller;
 import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.admin.memberManagement.service.MemberManagementService;
+import com.spring.client.auth.service.UserMypageService;
 import com.spring.client.domain.Member;
 import com.spring.common.vo.PageRequestDTO;
 import com.spring.common.vo.PageResponseDTO;
@@ -24,7 +27,8 @@ public class MemberManagementController {
 
 	@Autowired
 	private final MemberManagementService memberManagementService;
-	
+
+    private final UserMypageService userMypageService;
 	/**
 	 * 검색 기능 및 페이징 처리 제외
 	 * @param member
@@ -81,5 +85,14 @@ public class MemberManagementController {
         return "admin/memberManage/memberDetail";
     }
 
+    @PostMapping("/deleteMember")
+    public ResponseEntity<String> deleteMember(@RequestParam("memberId") String memberId) {
+        if (memberId != null) {
+            userMypageService.nullifyUserData(memberId);  // 사용자 데이터 삭제
+            return ResponseEntity.ok("DELETED");  // 성공 시 메시지 반환
+        } else {
+            return ResponseEntity.status(401).body("ERROR");  // 오류 시 메시지 반환
+        }
+    }
 
 }

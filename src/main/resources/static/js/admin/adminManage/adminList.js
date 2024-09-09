@@ -3,6 +3,8 @@ $(document).ready(function() {
 
     // 아이디 및 이메일 마스킹 함수
     function maskText(text, type) {
+        if (!text) return ''; // 텍스트가 없는 경우 빈 문자열 반환
+
         let masked = text.slice(0, 3);
         if (type === 'email') {
             let domainIndex = text.indexOf("@");

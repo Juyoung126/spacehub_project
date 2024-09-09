@@ -174,5 +174,4 @@ public class UserMypageController {
             return ResponseEntity.status(401).body("ERROR"); // 로그인 세션 없음
         }
     }
-
 }
