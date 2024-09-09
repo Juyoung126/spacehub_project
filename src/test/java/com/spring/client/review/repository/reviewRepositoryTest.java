@@ -29,13 +29,21 @@ public class reviewRepositoryTest {
 	public void reviewInsertTest() {
 	    for (int i = 1; i <= 10; i++) {
 	        Space space = new Space();
+<<<<<<< HEAD
 	        space.setSpNo((long) 2);
+=======
+	        space.setSpNo((long) 1);
+>>>>>>> 9c6d8ce (댓글 평점, 멤버, 예약 아이디 추척)
 
 	        Member member = new Member();
 	        member.setMemberNo((long) 1);
 
 	        Reservation reservation = new Reservation();
+<<<<<<< HEAD
 	        reservation.setResNo((long) (2)); // 예시로 예약 번호를 다르게 설정
+=======
+	        reservation.setResNo((long) (4)); // 예시로 예약 번호를 다르게 설정
+>>>>>>> 9c6d8ce (댓글 평점, 멤버, 예약 아이디 추척)
 
 	        log.info("Reservation: " + reservation);
 	        log.info("Reservation ID: " + reservation.getResNo());

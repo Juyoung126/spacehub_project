@@ -1,6 +1,5 @@
 //<!-- memberId, reservationInd 추적 추가 -->
 
-//탬플릿 평점 추가
 
 $(document).ready(function() {
     // 날짜 형식 함수 추가
@@ -38,23 +37,20 @@ $(document).ready(function() {
         return true;
     };
 
-    
-	// 리뷰 템플릿 함수
-	const template = (data) => {
-	    let $div = $('#reviewList');
-	    let $element = $('#item-template').clone().removeAttr('id').show(); // 요소를 복제하고 표시
-	    $element.attr("data-id", data.revNo);
-	    $element.addClass("review");
-	    $element.find('.name').text(data.member.memberName); // memberName 참조
-	    $element.find('.score').text("평점: " + data.revScore); // 평점 표시
-	    $element.find('.cdate').text(getDateFormat(new Date(data.revDate)));
-	    let body = data.revContent;
-	    body = body.replace(/(\r\n|\r|\n)/g, "<br />");
-	    $element.find('.card-text').html(body);
-	    $div.append($element); 
-	    console.log("Review added:", $element); // 콘솔 로그 추가
-	};
-
+    // 리뷰 템플릿 함수
+    const template = (data) => {
+        let $div = $('#reviewList');
+        let $element = $('#item-template').clone().removeAttr('id').show(); // 요소를 복제하고 표시
+        $element.attr("data-id", data.revNo);
+        $element.addClass("review");
+        $element.find('.name').text(data.member.memberName); // memberName 참조
+        $element.find('.cdate').text(getDateFormat(new Date(data.revDate)));
+        let body = data.revContent;
+        body = body.replace(/(\r\n|\r|\n)/g, "<br />");
+        $element.find('.card-text').html(body);
+        $div.append($element); 
+        console.log("Review added:", $element); // 콘솔 로그 추가
+    };
 
     // 폼 데이터 초기화 함수
     const dataReset = () => {
@@ -62,28 +58,6 @@ $(document).ready(function() {
             this.reset();
         });
     };
-<<<<<<< HEAD
-
-	// 리뷰 목록 로드
-	$(document).ready(function() {
-	    let spaceId = $("#spaceId").val();
-	    console.log("Space ID:", spaceId);
-	    if (!spaceId) {
-	        alert("spaceId가 설정되지 않았습니다.");
-	        return;
-	    }
-	    $.getJSON("/review/reviewList/" + spaceId, function(result) { 
-	        console.log("Reviews loaded:", result);
-	        for(let value of result){
-	            console.log("Review data:", value);
-	            template(value);
-	        }
-	    }).fail(function() {
-	        alert("리뷰 목록을 불러오는데 실패하였습니다. 잠시 후에 다시 시도해 주세요.");
-	    });
-	});
-
-=======
 
     // 리뷰 목록 로드
     let spaceId = 1; // $("#spaceId").val();
@@ -102,15 +76,11 @@ $(document).ready(function() {
         alert("리뷰 목록을 불러오는데 실패하였습니다. 잠시 후에 다시 시도해 주세요.");
     });
 
->>>>>>> 9c6d8ce (댓글 평점, 멤버, 예약 아이디 추척)
 	// 리뷰 등록
 	$(document).off("click", "#reviewInsertBtn").on("click", "#reviewInsertBtn", function(){ 
 	    if (!checkForm("#member","작성자를")) return; 
 	    else if (!checkForm("#revContent","내용을")) return;
-	    else if (!$("input[name='revScore']:checked").val()) {
-	        alert("평점을 선택해 주세요.");
-	        return;
-	    } else {
+	    else {
 	        // 버튼 비활성화
 	        $(this).prop("disabled", true);
 	        $.ajax({
@@ -127,8 +97,7 @@ $(document).ready(function() {
 	                },
 	                reservation: {
 	                    resNo: $("#resNo").val() // 숨겨진 필드에서 resNo 값 가져오기
-	                },
-	                revScore: $("input[name='revScore']:checked").val() // 선택된 평점 값 가져오기
+	                }
 	            }),
 	            dataType: "json"
 	        }).done(function(data){    
@@ -147,6 +116,7 @@ $(document).ready(function() {
 	        });    
 	    }
 	});
+
 
     // 리뷰 삭제
     $(document).off("click", ".reviewDeleteBtn").on("click", ".reviewDeleteBtn", function(e){ 
@@ -173,64 +143,6 @@ $(document).ready(function() {
     });
 
     // 대댓글 템플릿 함수
-<<<<<<< HEAD
-	const replyTemplate = (data, reviewId) => {
-	    let $div = $(`#reviewList div[data-id=${reviewId}] .replyList`);
-	    let $element = $('<div class="card mb-2"></div>').attr("data-id", data.replyNo);
-	    if (data.member && data.member.memberName) {
-	        $element.append(`<div class="card-header"><span class="name">${data.member.memberName}</span><span class="cdate float-right">${getDateFormat(new Date(data.replyDate))}</span></div>`);
-	    } else {
-	        console.error("memberName is undefined");
-	    }
-	    let body = data.replyContent.replace(/(\r\n|\r|\n)/g, "<br />");
-	    $element.append(`<div class="card-body"><p class="card-text">${body}</p><button class="btn btn-primary replyUpdateFormBtn">수정</button><button class="btn btn-danger replyDeleteBtn">삭제</button></div>`);
-	    $div.append($element);
-	    console.log("Reply added:", $element); // 콘솔 로그 추가
-	};
-
-	$(document).off("click", ".replyInsertBtn").on("click", ".replyInsertBtn", function() {
-	    let $button = $(this);
-	    let $form = $button.closest(".replyForm");
-	    let reviewId = $button.closest(".review").data("id");
-	    if (!checkForm($form.find(".replyMember"), "작성자를")) return;
-	    else if (!checkForm($form.find(".replyContent"), "내용을")) return;
-	    else {
-	        // 버튼 비활성화
-	        $button.prop("disabled", true);
-	        $.ajax({
-	            url: "/review/replyInsert", // 전송 URL
-	            method: "POST", // 전송 시 method 방식
-	            contentType: "application/json", // Content-Type 헤더 설정
-	            data: JSON.stringify({
-	                member: {
-	                    memberName: $form.find(".replyMember").val() // memberName 설정
-	                },
-	                replyContent: $form.find(".replyContent").val(),
-	                review: {
-	                    revNo: reviewId
-	                }
-	            }),
-	            dataType: "json"
-	        }).done(function(data) {
-	            if (data != "") {
-	                console.log("Inserted reply data:", data); // 삽입된 대댓글 데이터를 로그로 출력
-	                replyTemplate(data, reviewId); // 새로운 대댓글을 리스트에 추가
-	                alert("대댓글 등록이 완료되었습니다.");
-	                $form[0].reset();
-	            }
-	        }).fail(function(jqXHR, textStatus, errorThrown) {
-	            alert("시스템에 문제가 있어 잠시 후 다시 진행해 주세요.");
-	            console.error("Error details:", textStatus, errorThrown); // 에러 상세 로그 출력
-	        }).always(function() {
-	            // 버튼 다시 활성화
-	            $button.prop("disabled", false);
-	        });
-	    }
-	});
-
-});
-
-=======
     const replyTemplate = (data, reviewId) => {
         let $div = $(`#reviewList div[data-id=${reviewId}] .replyList`);
         let $element = $('<div class="card mb-2"></div>').attr("data-id", data.replyNo);
@@ -367,6 +279,6 @@ $(document).ready(function() {
 					    });
 					});
 
->>>>>>> 9c6d8ce (댓글 평점, 멤버, 예약 아이디 추척)
+
 
 
