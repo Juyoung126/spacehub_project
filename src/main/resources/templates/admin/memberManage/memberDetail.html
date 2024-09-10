@@ -27,8 +27,8 @@
 					<p>회원번호: <span th:text="${member.memberNo}"></span></p>
 		            <p>아이디: <span id="memberId" th:text="${member.memberId}"></span></p>
 		            <p>이름: <span th:text="${member.memberName}"></span></p>
-		            <p>이메일: <span th:text="${member.memberEmail}"></span></p>
-		            <p>전화번호: <span th:text="${member.memberPhone}"></span></p>
+		            <p>이메일: <span id="memberEmail" th:text="${member.memberEmail}"></span></p>
+		            <p>전화번호: <span id="memberPhone" th:text="${member.memberPhone}"></span></p>
 		            <p>가입일자: <span th:text="${formattedDate_create}"></span></p>
 		            <p>상태: <span th:text="${member.memberState}"></span></p>
 		            <p>탈퇴일자:<span th:text="${formattedDate_update}"></span></p>

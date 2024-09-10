@@ -11,6 +11,6 @@ public interface AdminManagementService {
 	List<Admin> adminList(Admin admin);
 	Admin getAdminByAdmNo(Long admNo);
 	void saveAdmin(Admin admin);
-	PageResponseDTO<Admin> list(PageRequestDTO pageRequestDTO);
+	PageResponseDTO<Admin> list(String state, PageRequestDTO pageRequestDTO);
 
 }

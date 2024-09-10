@@ -14,20 +14,20 @@
 	        <th:block th:insert="~{template/admin/fragments/adminNav :: admin-nav}"></th:block>
 	    </div>
 	    <div class="main-content">
-	        <!-- 회원 정보를 찾을 수 없는 경우 -->
+	        <!-- 관리자 정보를 찾을 수 없는 경우 -->
 	        <div th:if="${!state}">
 			    <p th:text="${message}"></p>
 			</div>
 	
-	        <!-- 회원 정보를 찾을 수 있는 경우 -->
+	        <!-- 관리자 정보를 찾을 수 있는 경우 -->
 	        <div th:if="${state}">
 	        	<div id="detail">
             		<h1>관리자 상세 정보</h1>
 					<p>관리자번호: <span th:text="${admin.admNo}"></span></p>
 		            <p>아이디: <span id="admId" th:text="${admin.admId}"></span></p>
 		            <p>이름: <span th:text="${admin.admName}"></span></p>
-		            <p>이메일: <span th:text="${admin.admEmail}"></span></p>
-		            <p>전화번호: <span th:text="${admin.admPhone}"></span></p>
+		            <p>이메일: <span id="admEmail" th:text="${admin.admEmail}"></span></p>
+		            <p>전화번호: <span id="admPhone" th:text="${admin.admPhone}"></span></p>
 		            <p>입사일자: <span th:text="${formattedDate_create}"></span></p>
 		            <p>재직상태: <span th:text="${admin.admState}"></span></p>
 		            <p>퇴사일자:<span th:text="${formattedDate_update}"></span></p>

@@ -10,6 +10,6 @@ public interface MemberManagementService {
 
 	List<Member> memberList(Member member);
 	Member getMemberByMemberNo(Long memberNo);
-	PageResponseDTO<Member> list(PageRequestDTO pageRequestDTO);
+	PageResponseDTO<Member> list(String state, PageRequestDTO pageRequestDTO);
 
 }

@@ -174,4 +174,27 @@ public class UserMypageController {
             return ResponseEntity.status(401).body("ERROR"); // 로그인 세션 없음
         }
     }
+    
+    /*
+    @GetMapping("/myInquiryList")
+	public String myInquiryList(HttpSession session, PageRequestDTO pageRequestDTO, Model model) {
+	    String memberId = (String) session.getAttribute("loggedInUser");
+	
+	    if (memberId == null) {
+	        return "redirect:/auth/login"; // 로그인 페이지로 리다이렉트
+	    }
+	
+	    // 회원의 ID로 회원 번호를 조회 (이 방법이 아니라면 memberId로 직접 조회할 수 있는 방법도 고려)
+	    Member loggedInUser = userMypageService.getMemberById(memberId);
+	    if (loggedInUser == null) {
+	        return "redirect:/auth/login"; // 로그인 페이지로 리다이렉트
+	    }
+	
+	    // 문의글 조회
+	    PageResponseDTO<Inquiry> inquiryList = userMypageService.getInquiriesByMemberNo(loggedInUser.getMemberNo(), pageRequestDTO);
+	    model.addAttribute("inquiryList", inquiryList);
+	    
+	    return "client/mypage/myInquiryList";
+	}
+*/
 }

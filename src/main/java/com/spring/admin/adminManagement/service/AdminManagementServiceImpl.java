@@ -26,16 +26,23 @@ public class AdminManagementServiceImpl implements AdminManagementService {
         return adminManagementRepository.findAllByOrderByAdmNoAsc(); // 전체 목록 반환
     }
     @Override
-    public PageResponseDTO<Admin> list(PageRequestDTO pageRequestDTO) {
+    public PageResponseDTO<Admin> list(String state, PageRequestDTO pageRequestDTO) {
         Pageable pageable = PageRequest.of(
             pageRequestDTO.getPage() - 1, // 1페이지가 0이므로 주의
             pageRequestDTO.getSize(), Sort.by("admNo").descending()
         );
+
+        // 필터 조건을 추가하는 부분 (필터 조건에 따라 쿼리 수정 필요)
+        Page<Admin> result;
+        if ("all".equals(state)) {
+            result = adminManagementRepository.findAll(pageable);
+        } else {
+            result = adminManagementRepository.findByAdmState(state, pageable);
+        }
         
-        Page<Admin> result = adminManagementRepository.findAll(pageable); // 관리자 목록 조회
         List<Admin> adminList = result.getContent().stream().collect(Collectors.toList());
         long totalCount = result.getTotalElements();
-        
+
         PageResponseDTO<Admin> responseDTO = PageResponseDTO.<Admin>withAll()
             .dtoList(adminList)
             .pageRequestDTO(pageRequestDTO)
@@ -44,6 +51,7 @@ public class AdminManagementServiceImpl implements AdminManagementService {
             
         return responseDTO;
     }
+
 
     
     @Override

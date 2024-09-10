@@ -42,16 +42,27 @@ public class MemberManagementController {
         return "admin/memberManage/memberList"; 
     } */
 	
-	@GetMapping
-	public String memberList(@RequestParam(value = "page", defaultValue = "1") int page,Model model) {
-		PageRequestDTO pageRequestDTO = new PageRequestDTO();
-        pageRequestDTO.setPage(page);
-        
-	    PageResponseDTO<Member> memberList = memberManagementService.list(pageRequestDTO);
-	    model.addAttribute("memberList", memberList);
-	    
-	    return "admin/memberManage/memberList";
-	}
+    @GetMapping
+    public String memberList(
+            @RequestParam(value = "state", defaultValue = "all") String state,
+            @RequestParam(value = "page", defaultValue = "1") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size,
+            Model model) {
+
+        // PageRequestDTO를 생성하고 필요한 값을 설정합니다.
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+            .page(page)
+            .size(size)
+            .build();
+
+        // 필터 상태를 기반으로 데이터를 가져옵니다.
+        PageResponseDTO<Member> memberList = memberManagementService.list(state, pageRequestDTO);
+        model.addAttribute("memberList", memberList);
+        model.addAttribute("currentStatus", state);  // 현재 필터 상태를 모델에 추가합니다.
+
+        return "admin/memberManage/memberList";
+    }
+
     
     /* 고객별 상세 페이지 */
     @GetMapping("/{memberNo}")

@@ -40,15 +40,26 @@ public class AdminManagementController {
     }    
     */
 	@GetMapping
-	public String adminList(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-	    PageRequestDTO pageRequestDTO = new PageRequestDTO();
-	    pageRequestDTO.setPage(page);
-	    
-	    PageResponseDTO<Admin> adminList = adminManagementService.list(pageRequestDTO);
+	public String adminList(
+	        @RequestParam(value = "state", defaultValue = "all") String state,
+	        @RequestParam(value = "page", defaultValue = "1") int page,
+	        @RequestParam(value = "size", defaultValue = "10") int size,
+	        Model model) {
+
+	    // PageRequestDTO를 생성하고 필요한 값을 설정합니다.
+	    PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+	        .page(page)
+	        .size(size)
+	        .build();
+
+	    // 필터 상태를 기반으로 데이터를 가져옵니다.
+	    PageResponseDTO<Admin> adminList = adminManagementService.list(state, pageRequestDTO);
 	    model.addAttribute("adminList", adminList);
-	    
+	    model.addAttribute("currentStatus", state);  // 현재 필터 상태를 모델에 추가합니다.
+
 	    return "admin/adminManage/adminList";
 	}
+
     /* 관리자별 상세 페이지 */
     @GetMapping("/{admNo}")
     public String memberDetail(@PathVariable Long admNo, Model model) {

@@ -31,17 +31,27 @@ public class MemberManagementServiceImpl implements MemberManagementService {
         return memberManagementRepository.findByMemberNo(memberNo); // memberNo로 조회
     }
     
-    @Override
-	public PageResponseDTO<Member> list(PageRequestDTO pageRequestDTO) {
-		 Pageable pageable = PageRequest.of(
-				  pageRequestDTO.getPage() - 1, // 1페이지가 0이므로 주의
-				  pageRequestDTO.getSize(), Sort.by("memberNo").descending());
-		 Page<Member> result = memberManagementRepository.findAll(pageable);
-		 List<Member> memberList = result.getContent().stream().collect(Collectors.toList());
-		 long totalCount = result.getTotalElements();
-		 PageResponseDTO<Member> responseDTO = PageResponseDTO.<Member>withAll().dtoList(memberList)
-				 .pageRequestDTO(pageRequestDTO).totalCount(totalCount).build();
-				 
-		return responseDTO;
-	}
+    public PageResponseDTO<Member> list(String state, PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+            pageRequestDTO.getPage() - 1, // 1페이지가 0이므로 주의
+            pageRequestDTO.getSize(), 
+            Sort.by("memberNo").descending()
+        );
+
+        Page<Member> result;
+        if ("all".equals(state)) {
+            result = memberManagementRepository.findAll(pageable);
+        } else {
+            result = memberManagementRepository.findByMemberState(state, pageable);
+        }
+        
+        List<Member> memberList = result.getContent().stream().collect(Collectors.toList());
+        long totalCount = result.getTotalElements();
+        return PageResponseDTO.<Member>withAll()
+            .dtoList(memberList)
+            .pageRequestDTO(pageRequestDTO)
+            .totalCount(totalCount)
+            .build();
+    }
+
 }

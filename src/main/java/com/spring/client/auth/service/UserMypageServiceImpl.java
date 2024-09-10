@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserMypageServiceImpl implements UserMypageService {
 	private final UserMypageRepository userMypageRepository;
-
+//	private final InquiryRepository inquiryRepository;
     @Override
     public Member getMemberById(String memberId) {
         return userMypageRepository.findByMemberId(memberId)
@@ -46,5 +46,32 @@ public class UserMypageServiceImpl implements UserMypageService {
     public void nullifyUserData(String memberId) {
     	userMypageRepository.nullifyUserData(memberId);
     }
+       
+    /*
+    @Override
+    public List<Inquiry> inquiryList(Inquiry inquiry) {
+        return (List<Inquiry>) inquiryRepository.findAll();
+    }
 
+    @Override
+    public PageResponseDTO<Inquiry> list(PageRequestDTO pageRequestDTO) {
+        Pageable pageable = PageRequest.of(
+            pageRequestDTO.getPage() - 1, // 1페이지가 0이므로 주의
+            pageRequestDTO.getSize(),
+            Sort.by("inquiryNo").descending() // 실제 도메인에 맞는 정렬 기준
+        );
+
+        Page<Inquiry> result = inquiryRepository.findAll(pageable);
+        List<Inquiry> inquiryList = result.getContent();
+        long totalCount = result.getTotalElements();
+
+        PageResponseDTO<Inquiry> responseDTO = PageResponseDTO.<Inquiry>withAll()
+            .dtoList(inquiryList)
+            .pageRequestDTO(pageRequestDTO)
+            .totalCount(totalCount)
+            .build();
+
+        return responseDTO;
+    }
+     */
 }

@@ -36,14 +36,8 @@ $(document).ready(function() {
     // 필터에 따라 테이블 행을 숨기거나 표시
     $('#status-filter').change(function() {
         var selectedState = $(this).val();
-        $('table tbody tr').each(function() {
-            var rowStatus = $(this).data('status');
-            if (selectedState === 'all' || rowStatus === selectedState) {
-                $(this).removeClass('hidden');
-            } else {
-                $(this).addClass('hidden');
-            }
-        });
+        $('#hiddenState').val(selectedState); // 필터 상태를 hidden 필드에 저장
+        $('#searchForm').submit(); // 폼 제출로 서버에 필터 값 전달
     });
 
     // 상세 정보를 볼 때 최고 관리자만 접근 가능하도록
