@@ -17,4 +17,7 @@ public interface ReplyService {
 
     /* 대댓글 삭제 */
     void deleteReply(Long replyId);
+    
+    /* 특정 reviewId에 대한 대댓글 리스트 */
+    List<Reply> getReplyList(Long reviewId);
 }

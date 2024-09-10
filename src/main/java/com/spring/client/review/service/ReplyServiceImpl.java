@@ -16,7 +16,14 @@ import lombok.RequiredArgsConstructor;
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
-
+    
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Reply> getReplyList(Long reviewId) {
+        return replyRepository.findByReviewRevNo(reviewId);
+    }
+    
     @Override
     @Transactional(readOnly = true)
     public List<Reply> findRepliesByReviewId(Long reviewId) {
