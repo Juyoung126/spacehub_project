@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" class="h-100" data-bs-theme="auto">
 
 <head>
     <meta charset="UTF-8">
@@ -23,7 +23,8 @@
 
             <div class="form-group">
                 <label for="admNo">관리자 번호</label>
-                <input type="text" id="admNo" name="admNo" required>
+                <input type="text" th:field="${admin.admNo}" readonly="readonly" />
+
             </div>
 
             <div class="form-group">
@@ -46,45 +47,54 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $('#noticeForm').on('submit', function (event) {
-                event.preventDefault();
+    $(document).ready(function () {
+        $('#noticeForm').on('submit', function (event) {
+            event.preventDefault();
 
-                const title = $('#nbTitle').val();
-                const admNo = $('#admNo').val();
-                const content = $('#nbContent').val();
-                const category = $('#nbCate').val();
+            const title = $('#nbTitle').val();
+            const admNo = $('#admNo').val();
+            const content = $('#nbContent').val();
+            const category = $('#nbCate').val();
 
-                $.ajax({
-                    type: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        nbTitle: title,
-                        admNo: admNo,
-                        nbContent: content,
-                        nbCate: category
-                    }),
-                    url: '/notice/noticeInsert',
-                    success: function (response) {
-                        $('#responseMessage').text('공지사항이 성공적으로 등록되었습니다.').show();
-                        $('#noticeForm')[0].reset();
-                    },
-                    error: function (xhr, status, error) {
-                        $('#responseMessage').text('오류가 발생했습니다. 다시 시도하세요.').show();
-                    }
-                });
-            });
+            // 유효성 검사
+            if (!admNo) {
+                $('#responseMessage').text('관리자 번호가 필요합니다.').show();
+                return;
+            }
 
-            $('.cancel').on('click', function () {
-                $('#noticeForm')[0].reset();
-                $('#responseMessage').hide();
-            });
-
-            $('#goToList').on('click', function () {
-                window.location.href = '/notice/noticeList';
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    nbTitle: title,
+                    admNo: admNo,
+                    nbContent: content,
+                    nbCate: category
+                }),
+                url: '/admin/notice/noticeInsert',
+                success: function (response) {
+                   // $('#responseMessage').text('공지사항이 성공적으로 등록되었습니다.').show();
+                   // $('#noticeForm')[0].reset();
+                    location.href = response;  // 등록 후 목록으로 리다이렉트
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    $('#responseMessage').text('오류가 발생했습니다. 다시 시도하세요.').show();
+                }
             });
         });
-    </script>
+
+        $('.cancel').on('click', function () {
+            $('#noticeForm')[0].reset();
+            $('#responseMessage').hide();
+        });
+
+        $('#goToList').on('click', function () {
+            window.location.href = '/admin/notice/noticeList';
+        });
+    });
+</script>
+
 </body>
 
 </html>

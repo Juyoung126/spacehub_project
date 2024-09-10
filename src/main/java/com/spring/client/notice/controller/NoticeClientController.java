@@ -52,7 +52,7 @@ public class NoticeClientController {
 	public String noticeInsert(@RequestBody Notice notice) {
 		noticeService.noticeInsert(notice);
 		
-		return "redirect:/notice/noticeList";
+		return "redirect:/admin/notice/noticeList";
 	}
 	
 	@PostMapping("/updateForm")
