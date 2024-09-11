@@ -3,14 +3,17 @@
 <head>
 <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
 <th:block th:insert="~{template/admin/fragments/adminNav :: config}"></th:block>
+<link href="/css/admin/adminMain.css" rel="stylesheet">
 </head>
 <body>
-	<div class="container mt-4">
-		<h1>관리자 예약 관리</h1>
-		<div class="admin-nav">
-			<th:block
-				th:insert="~{template/admin/fragments/adminNav :: admin-nav}"></th:block>
+	<div class="wrapper">
+		
+		<div class="mb-auto">
+			<th:block th:insert="~{template/admin/fragments/adminNav :: admin-nav}">
+				</th:block>
 		</div>
+		<div class="main-content">
+		<h1>관리자 예약 관리</h1>
 		<!-- 필터 및 검색 -->
 		<div class="row mb-3">
 			<div class="col-md-4">
@@ -70,6 +73,8 @@
 		<div th:if="${reservations.isEmpty()}">
 			<p>예약 정보가 없습니다.</p>
 		</div>
+	</div>
+	
 	</div>
 
 	<script src="/js/jquery-3.7.1.min.js"></script>
