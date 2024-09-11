@@ -1,6 +1,7 @@
 package com.spring.client.reservation.service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -63,5 +64,28 @@ public class ReservationServiceImpl implements ReservationService {
             scheduledTasks.remove(resNo);
         }
     }
+
+	@Override
+	public List<Reservation> getByMemberNo(Long memberNo) {
+		List<Reservation> res = reservationRepository.reservationList(memberNo);
+		return res;
+	}
+	
+	 // 예약이 존재하는지 확인하는 메서드
+	@Override
+    public boolean isReservationExists(Long resNo) {
+        // 예약 번호로 예약이 존재하는지 확인
+        return reservationRepository.existsById(resNo);
+    }
+
+	@Override
+	public List<Reservation> reservationList() {
+		List<Reservation> res = reservationRepository.findAllByOrderByResStartTime();
+		return res;
+	}
+
+	
 }
+	
+
 

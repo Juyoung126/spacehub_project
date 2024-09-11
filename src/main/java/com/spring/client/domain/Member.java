@@ -25,7 +25,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "SPACEHUB_MEMBER")
-@SequenceGenerator(name = "spacehub_member_generator", sequenceName = "spacehub_member_seq", initialValue = 1, allocationSize = 1)
+@SequenceGenerator(name = "spacehub_member_generator", sequenceName = "spacehub_member_seq", initialValue = 4, allocationSize = 1)
 public class Member {
 
     @Id
