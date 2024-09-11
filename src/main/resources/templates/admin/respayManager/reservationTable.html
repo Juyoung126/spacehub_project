@@ -1,44 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet" />
-<th:block th:insert="~{template/admin/fragments/adminNav :: config}"></th:block>
-<link href="/css/admin/payment/payment.css" rel="stylesheet">
-</head>
-<body>
-	<div class="wrapper">
-
-		<div class="mb-auto">
-			<th:block
-				th:insert="~{template/admin/fragments/adminNav :: admin-nav}">
-			</th:block>
-		</div>
-		<div class="container text-center">
-			<h1>관리자 예약 관리</h1>
-			<!-- 필터 및 검색 -->
-			<div class="row mb-1">
-				<div class="col-md-3">
-					<select class="form-select" id="searchType">
-						<option value="name">예약자명</option>
-						<option value="date">예약 날짜</option>
-					</select>
-				</div>
-				<div class="col-md-4" id="textArea">
-					<input type="text" class="form-control" id="searchKeyword"
-						placeholder="검색어를 입력하세요">
-				</div>
-				<div class="col-md-4" id="dateArea">
-					<input type="date" class="form-control" id="startDate" />
-				</div>
-				<div class="col-md-4">
-					<button class="btn btn-primary" id="searchButton">검색</button>
-				</div>
-			</div>
-
-
-			<div id="reservation-list">
-				<!-- 예약 목록 테이블 -->
-				<table class="table table-hover">
+	<table class="table table-hover">
 					<thead>
 						<tr>
 							<th>예약 번호</th>
@@ -86,13 +46,3 @@
 							aria-label="Next"> &raquo; </a></li>
 					</ul>
 				</nav>
-			</div>
-		</div>
-
-
-	</div>
-
-	<script src="/js/jquery-3.7.1.min.js"></script>
-	<script src="/js/admin/payment/payment.js"></script>
-</body>
-</html>

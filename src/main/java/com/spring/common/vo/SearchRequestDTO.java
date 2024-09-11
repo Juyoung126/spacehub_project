@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class SearchRequestDTO {
 
-	
+	private String searchType;
 	private String keyWord;
 	private LocalDateTime dateSearch;
 }

@@ -53,11 +53,11 @@ $("#searchType").on("change", function() {
 $("#searchButton").on("click", function() {
     var searchType = $("#searchType").val();  // 검색 타입
     var searchKeyword = $("#searchKeyword").val();  // 검색어
-    var searchDate = $("#startDate").val();  // 예약 날짜
+    var searchDate = $("#dateArea").val();  // 예약 날짜
 
     // AJAX 요청으로 검색 실행
     $.ajax({
-        url: '/admin/reservationManager',  // 요청할 URL
+        url: '/admin/reservationManagerSearch',  // 요청할 URL
         type: 'GET',  // HTTP GET 메서드
         data: {
             searchType: searchType,
@@ -65,8 +65,8 @@ $("#searchButton").on("click", function() {
             date: searchDate
         },
         success: function(response) {
-            // 서버에서 받은 Fragment로 테이블만 갱신
-            $("tbody").html(response);
+           
+            $("#reservation-list").html(response);
         },
         error: function(error) {
             console.error("검색 오류:", error);
