@@ -24,7 +24,7 @@
                 </div>   
                 
                 <div class="container"> 
-                    <form id="updateForm" name="updateForm" th:action="@{/notice/noticeUpdate}" method="post" th:object="${updateData}">
+                    <form id="updateForm" name="updateForm" th:action="@{/admin/notice/noticeUpdate}" method="post" th:object="${updateData}">
                         <input type="hidden" name="nbNo" th:value="*{nbNo}" /> <!-- 공지사항 번호 -->
                         <div class="mb-3 row">
                             <label class="col-sm-2 col-form-label">작성자 번호</label>
@@ -51,9 +51,9 @@
                     </form>
                     <div class="text-end">
                         <!-- 버튼 클릭 시 form.submit() 호출 -->
-                        <button type="button" id="boardUpdateBtn" class="btn-second">글수정</button>
+                        <button type="button" id="boardUpdateBtn" class="btn-success">글수정</button>
                         <button type="button" id="boardCancelBtn" class="btn-danger">글취소</button>
-                        <button type="button" id="boardListBtn" class="accent">글목록</button>
+                        <button type="button" id="boardListBtn" class="btn-second">글목록</button>
                     </div>
                 </div>
             </th:block>
@@ -61,6 +61,9 @@
     </div>
     
     <th:block layout:fragment="script">
+      	
+    	<script src="https://code.jquery.com/jquery.js"></script>
+    	<script src="/js/common.js"></script>
         <script>
             $(document).ready(function() {
                 $("#boardUpdateBtn").on("click", function() {
@@ -77,7 +80,7 @@
                 });
 
                 $("#boardListBtn").on("click", function() {
-                    location.href = "/notice/noticeList"; // 목록 페이지로 이동
+                    location.href = "/admin/notice/noticeList"; // 목록 페이지로 이동
                 });
             });
         </script>

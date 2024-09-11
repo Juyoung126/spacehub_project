@@ -40,18 +40,19 @@
 
                             <!-- 관리자 페이지 수정 및 삭제 -->
                             <div class="actions">
-                                <!-- 수정 Form -->
-                                <form th:action="@{/admin/notice/updateForm}" method="get">
-                                    <input type="hidden" name="nbNo" th:value="${vo.nbNo}">
-                                    <input type="submit" value="수정" class="button w-btn-green">
-                                </form>
+							    <!-- 수정 Form -->
+							    <form th:action="@{/admin/notice/updateForm}" method="get">
+							        <input type="hidden" name="nbNo" th:value="${vo.nbNo}">
+							        <input type="submit" value="수정" class="btn-success"> <!-- 수정 버튼 -->
+							    </form>
+							
+							    <!-- 삭제 Form -->
+							    <form th:action="@{/admin/notice/noticeDelete}" method="post" onsubmit="confirmDelete(event, this)">
+							        <input type="hidden" name="nbNo" th:value="${vo.nbNo}">
+							        <input type="submit" value="삭제" class="btn-danger"> <!-- 삭제 버튼 -->
+							    </form>
+							</div>
 
-                                <!-- 삭제 Form -->
-                                <form th:action="@{/admin/notice/noticeDelete}" method="post" onsubmit="confirmDelete(event, this)">
-                                    <input type="hidden" name="nbNo" th:value="${vo.nbNo}"> <!-- 삭제할 공지사항 번호 -->
-                                    <input type="submit" value="삭제" class="button w-btn-red"> <!-- 삭제 버튼 -->
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -61,7 +62,7 @@
             <div id="board-list">
                 <div class="container">
                     <div class="wrap">
-                        <a href="/admin/notice/insertForm" class="button">새글 작성</a>
+						<a href="/admin/notice/insertForm" class="btn-second">새글 작성</a>
                     </div>
                 </div>
             </div>
@@ -92,6 +93,7 @@
     </div>
     
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/js/common.js"></script>
     <script>
         $(function () {
             let i = 0;
