@@ -43,7 +43,12 @@ public class SpaceDetailServiceImpl implements SpaceDetailService {
 		SpaceDetail updateData = spaceDetailOptional.orElseThrow();
 		return updateData;
 	}
-	
+	@Override
+	public SpaceDetail getSpaceDetailBySpNo(Long spNo) {
+		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findBySpaceSpNo(spNo);
+		SpaceDetail updateData = spaceDetailOptional.orElseThrow();
+		return updateData;
+	}
 	@Override
 	public void spaceDetailUpdate(SpaceDetail spaceDetail) {
 		Optional<SpaceDetail> spaceDetailOptional = spaceDetailRepository.findById(spaceDetail.getSpDetail());
@@ -51,15 +56,14 @@ public class SpaceDetailServiceImpl implements SpaceDetailService {
 		updateSpaceDetail.setSpDescription(spaceDetail.getSpDescription());
 		updateSpaceDetail.setSpEquipment(spaceDetail.getSpEquipment());
 		updateSpaceDetail.setSpStartTime(spaceDetail.getSpStartTime());
-		updateSpaceDetail.setSpEndTime(spaceDetail.getSpEndTime());
 		
 		spaceDetailRepository.save(updateSpaceDetail);
 		
 	}
 
 	@Override
-	public void spaceDetailDelete(SpaceDetail spaceDetail) {
-		spaceDetailRepository.deleteById(spaceDetail.getSpDetail());	
+	public void spaceDetailDelete(Long spNo) {
+		spaceDetailRepository.deleteBySpNo(spNo);	
 	}
 
 	@Override
@@ -67,6 +71,8 @@ public class SpaceDetailServiceImpl implements SpaceDetailService {
         return spaceDetailRepository.findBySpaceSpNo(spNo)
             .orElseThrow(() -> new EntityNotFoundException("SpaceDetail not found for space id " + spNo));
     }
+
+
 
 }
 

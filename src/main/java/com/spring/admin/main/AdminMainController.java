@@ -13,5 +13,5 @@ public class AdminMainController {
 	public String mainAdmin() {
 		return "admin/adminMain";
 	}
-
+	
 }

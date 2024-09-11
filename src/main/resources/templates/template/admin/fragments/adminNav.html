@@ -20,7 +20,23 @@
 		
 		<!-- 버튼 css -->
     	<link href="/css/client/button.css" rel="stylesheet">
-    	
+    	<script src="/js/jquery-3.7.1.min.js"></script>
+    	<script>
+	    	$(document).ready(function() {
+	        	$('#logoutBtn').on('click', function() {
+	            	$.ajax({
+	                	url: '/admin/logout',
+	                    type: 'POST',
+	                    success: function() {
+	                        window.location.href = '/admin';
+	                    },
+	                    error: function(xhr, status, error) {
+	                        console.error('Logout error:', status, error);
+	                    }
+	                });
+	            });
+	        });
+    	</script>
 	</th:block>
 	
 

@@ -29,8 +29,8 @@ public interface SpaceDetailRepository extends JpaRepository<SpaceDetail, Long> 
     // SpaceDetail 업데이트 (spDetail에 해당하는 엔티티의 특정 필드를 업데이트)
     @Modifying
     @Transactional
-    @Query("UPDATE SpaceDetail d SET d.spDescription = ?2, d.spEquipment = ?3, d.spStartTime = ?4, d.spEndTime = ?5 WHERE d.spDetail = ?1")
-    public int spaceDetailUpdate(Long spDetail, String spDescription, String spEquipment, String spStartTime, String spEndTime);
+    @Query("UPDATE SpaceDetail d SET d.spDescription = ?2, d.spEquipment = ?3, d.spStartTime = ?4 WHERE d.spDetail = ?1")
+    public int spaceDetailUpdate(Long spDetail, String spDescription, String spEquipment, String spStartTime);
 
     // SpaceDetail 삭제
     @Modifying
@@ -41,5 +41,10 @@ public interface SpaceDetailRepository extends JpaRepository<SpaceDetail, Long> 
     // 특정 공간 번호에 해당하는 SpaceDetail을 찾는 메서드
     //@Query("SELECT sd FROM SpaceDetail sd WHERE sd.space.spNo = :spNo")
 	public Optional<SpaceDetail> findBySpaceSpNo(Long spNo);
+	
+	@Modifying
+    @Transactional
+    @Query("DELETE FROM SpaceDetail d WHERE d.spDetail = ?1")
+	public void deleteBySpNo(Long spNo);
 	
 }

@@ -3,7 +3,6 @@ package com.spring.client.auth.service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -71,10 +70,10 @@ public class UserAuthServiceImpl implements UserAuthService {
 
         long currentTime = System.currentTimeMillis();
         long timeElapsed = currentTime - entry.getTimestamp();
-        if (timeElapsed > TimeUnit.MINUTES.toMillis(5)) {
-            verificationCodes.remove(email);
-            return false;
-        }
+//        if (timeElapsed > TimeUnit.MINUTES.toMillis(5)) {
+//            verificationCodes.remove(email);
+//            return false;
+//        }
 
         return entry.getCode().equals(code);
     }

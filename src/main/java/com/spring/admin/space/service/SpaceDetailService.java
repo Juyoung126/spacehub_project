@@ -9,7 +9,8 @@ public interface SpaceDetailService {
 	void spaceDetailSave(SpaceDetail spaceDetail);
 	SpaceDetail spaceDetailContent (SpaceDetail spaceDetail);
 	void spaceDetailUpdate (SpaceDetail spaceDetail);
-	void spaceDetailDelete (SpaceDetail spaceDetail);
+	void spaceDetailDelete (Long spNo);
 	SpaceDetail getSpaceDetail(Long spDetail);
 	SpaceDetail getSpaceDetailBySpaceId(Long spNo);
+	public SpaceDetail getSpaceDetailBySpNo(Long spNo);
 }

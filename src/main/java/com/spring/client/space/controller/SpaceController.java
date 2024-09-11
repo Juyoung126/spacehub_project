@@ -44,9 +44,11 @@ public class SpaceController {
 	
 	@GetMapping("/{spNo}")
     public String spaceDetail(@PathVariable Long spNo, Model model) {
+		spaceService.mountHitCount(spNo);
+		
         Space space = spaceService.getSpaceById(spNo);
         SpaceDetail spaceDetail = spaceDetailService.getSpaceDetailBySpaceId(spNo);
-        List<SpaceImg> spaceImgs = spaceImgService.getSpaceImgsBySpaceId(spNo);
+        SpaceImg spaceImgs = spaceImgService.getSpaceImgsBySpaceId(spNo);
         
         model.addAttribute("space", space);
         model.addAttribute("spaceDetail", spaceDetail);

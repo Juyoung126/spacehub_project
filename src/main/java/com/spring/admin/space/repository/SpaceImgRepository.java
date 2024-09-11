@@ -22,7 +22,7 @@ public interface SpaceImgRepository extends JpaRepository<SpaceImg, Long> {
     List<SpaceImg> findBySpImgContaining(String spImg);
 
     //공간의 이미지를 조회하는 메서드를 제공, getSpaceImgsBySpaceIdh 사용해서 이미지 리스트 가져옴
-    List<SpaceImg> findBySpaceDetailSpaceSpNo(Long spNo);
+    SpaceImg findBySpaceDetailSpaceSpNo(Long spNo);
     
     //주어진 SpaceDetail 객체와 연결된 모든 SpaceImg 엔티티를 반환하는 메서드
 	List<SpaceImg> findBySpaceDetail(SpaceDetail spaceDetail);

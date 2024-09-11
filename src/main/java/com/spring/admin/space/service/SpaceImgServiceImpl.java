@@ -1,6 +1,5 @@
 package com.spring.admin.space.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,12 @@ public class SpaceImgServiceImpl implements SpaceImgService{
 	@Autowired
 	public final SpaceImgRepository spaceImgRepository;
 
-	@Override
-	public List<SpaceImg> spaceImgList(SpaceImg spaceImg) {
-		List<SpaceImg> spaceList = null;
-		spaceList = (List<SpaceImg>) spaceImgRepository.findAll();
-		return spaceList;
-	}
+//	@Override
+//	public List<SpaceImg> spaceImgList(SpaceImg spaceImg) {
+//		List<SpaceImg> spaceList = null;
+//		spaceList = (List<SpaceImg>) spaceImgRepository.findAll();
+//		return spaceList;
+//	}
 
 	@Override
 	public void spaceImgSave(SpaceImg spaceImg) {
@@ -47,11 +46,16 @@ public class SpaceImgServiceImpl implements SpaceImgService{
 	@Override
 	public void spaceImgUpdate(SpaceImg spaceImg) {
 		Optional<SpaceImg> spaceImgOptional = spaceImgRepository.findById(spaceImg.getApiNo());
-		SpaceImg updateSpaceImg = spaceImgOptional.get();
+//		SpaceImg updateSpaceImg = spaceImgOptional.get();	
+//		updateSpaceImg.setSpImg(spaceImg.getSpImg());
+//		spaceImgRepository.save(updateSpaceImg);
 		
-		updateSpaceImg.setSpImg(spaceImg.getSpImg());
-		
-		spaceImgRepository.save(updateSpaceImg);
+		if (spaceImgOptional.isPresent()) {
+            SpaceImg updateSpaceImg = spaceImgOptional.get();
+            updateSpaceImg.setSpImg(spaceImg.getSpImg());
+            spaceImgRepository.save(updateSpaceImg);
+        }
+
 	}
 
 	@Override
@@ -60,7 +64,7 @@ public class SpaceImgServiceImpl implements SpaceImgService{
 	}
 
 	@Override
-	public List<SpaceImg> getSpaceImgsBySpaceId(Long spNo) {
+	public SpaceImg getSpaceImgsBySpaceId(Long spNo) {
 		return spaceImgRepository.findBySpaceDetailSpaceSpNo(spNo);
 	}
 

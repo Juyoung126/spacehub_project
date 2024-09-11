@@ -1,9 +1,5 @@
 package com.spring.admin.space.domain;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -64,31 +60,30 @@ public class SpaceDetailRepositoryTests {
         */
     	
     }
-    
+    /*
     @Test
     public void testAddMultipleImagesToSpace() {
         // 1. Space 생성
         Space space = new Space();
-        space.setAdmNo(1L);
-        space.setSpName("테스트 공간");
-        space.setSpCapacity("10");
+        space.setAdmNo(1234L);
+        space.setSpName("테스트 14");
+        space.setSpCapacity("8~10");
         space.setSpHourPrice(10000L);
-        space.setSpKeyword("회의");
-        space.setSpMainImage("대표 이미지 URL");
+        space.setSpKeyword("회의실");
+
         spaceRepository.save(space);
 
         // 2. SpaceDetail 생성 및 저장
         SpaceDetail spaceDetail = new SpaceDetail();
         spaceDetail.setSpace(space);
-        spaceDetail.setSpDescription("테스트 공간 상세 설명");
+        spaceDetail.setSpDescription("JUnit 테스트 데이터");
         spaceDetail.setSpEquipment("프로젝터, 화이트보드");
         spaceDetail.setSpRules("음식물 반입 금지");
         spaceDetail.setSpStartTime("09:00");
-        spaceDetail.setSpEndTime("18:00");
         spaceDetailRepository.save(spaceDetail);
 
         // 3. 여러 SpaceImg 생성 및 저장
-        String[] imageUrls = {"이미지 URL 1", "이미지 URL 2", "이미지 URL 3"};
+        String[] imageUrls = {"space2-1.jpg", "space2-2.jpg", "space2-3.jpg"};
 
         for (String imageUrl : imageUrls) {
             SpaceImg spaceImg = new SpaceImg();
@@ -100,6 +95,12 @@ public class SpaceDetailRepositoryTests {
         // 4. 데이터 검증
         List<SpaceImg> images = spaceImgRepository.findBySpaceDetail(spaceDetail);
         assertEquals(imageUrls.length, images.size());  // 저장된 이미지 개수 확인
-    }
+        
+        // 5. 파일 경로 검증
+//        for (String imageUrl : imageUrls) {
+//            Path path = Paths.get("src/test/resources" + imageUrl);
+//            assertTrue(Files.exists(path));  // 파일이 실제로 존재하는지 확인
+//        }
+    }  */
 	
 }

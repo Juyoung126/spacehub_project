@@ -1,93 +1,101 @@
-/* adminSpaceDetail.css */
 
-/* 기본 스타일 */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #000;
-}
-
-/* 전체 레이아웃을 Flexbox로 설정 */
+/* 전체 레이아웃 */
 .wrapper {
     display: flex;
-    min-height: 100vh; /* 전체 화면 높이 */
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
-/* 메인 콘텐츠 영역 스타일 */
 .main-content {
-    flex: 1; /* 남은 공간을 차지하도록 설정 */
+    flex-grow: 1;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
 }
 
-/* 헤더 스타일 */
-header {
-    margin-bottom: 30px;
+.image-gallery img {
+    height: 300px;
+    width: auto;
+    object-fit: cover; /* Ensures the image covers the space, cropping if necessary */
 }
 
-header h2 {
-    font-size: 24px;
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* 폼 스타일 */
-form {
-    margin-top: 20px;
+h1, h3 {
+    color: #333;
+    margin-bottom: 15px;
 }
 
-.space-details {
-    margin-bottom: 30px;
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
 }
 
-.space-info {
+/* 테이블 스타일 */
+table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-.space-info th, .space-info td {
-    padding: 15px;
-    border: 1px solid #ddd;
-    font-size: 16px;
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
 }
 
-.space-info th {
-    background-color: #f4f4f4;
+table th {
+    background-color: #f2f2f2;
     font-weight: bold;
+    color: #555;
 }
 
-/* 체크박스 그룹 스타일 */
-.checkbox-group {
-    margin: 20px 0;
+table td {
+    background-color: #fff;
+    color: #333;
 }
 
-.checkbox-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 16px;
+/* 공간 상세 테이블 */
+.space-details th {
+    width: 20%;
 }
 
-/* 버튼 섹션 스타일 */
-.button-section {
-    margin-top: 30px;
+.space-details td[colspan="3"] {
+    width: 80%;
 }
 
-.button-section a,
-.button-section button {
-    padding: 15px 20px;
-    text-decoration: none;
-    color: #fff;
-    border: none;
-    margin-right: 15px;
-    cursor: pointer;
-    font-size: 16px;
+/* 리뷰 테이블 */
+.review-table th, .review-table td {
+    text-align: center;
 }
 
-/* 이미지 스타일 */
-.space-images {
-    margin-top: 30px;
+.review-table th {
+    background-color: #ececec;
 }
 
-.space-images img {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 15px;
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 10px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .button-group .btn-success, .button-group .btn-danger {
+        width: 100%;
+    }
 }

@@ -18,9 +18,10 @@
 	        <div class="main-content">
 	            <div class="container">
 	                <header class="text-center">
-	                    <h2>공간 대여 리스트</h2>
+	                    <h2 th:if="${spaceImgs != null}" th:text="'공간 대여 리스트 (' + ${#lists.size(spaceImgs)} + ')'">공간 대여 리스트</h2>
 	                </header>
-	
+
+	                          
 	                <div class="row" id="List">
 	                    <div th:if="${spaceList == null or spaceList.isEmpty()}" class="no-spaces">
 	                        <p>등록된 공간이 없습니다.</p>
@@ -28,11 +29,19 @@
 	
 	                    <div class="col item" th:each="space : ${spaceList}">
 	                        <div class="card">
+	                        	
 	                            <a th:href="@{'/admin/space/' + ${space.spNo}}" class="space-link">
-	                                <img th:src="${space.spMainImage}" alt="공간 이미지" class="card-img">
+	                                <img th:src="@{/admin/space/view/} + *{'s_'+spImg}" alt="공간 이미지" class="card-img"/>
 	                            </a>
+	                        	<!-- <a th:href="@{'/admin/space/' + ${space.spNo}}" class="space-link">
+								    <img th:src="@{/admin/space/view/s_} + ${spImg}" alt="공간 이미지" class="card-img"/>
+								</a> -->
+	                         	<!-- <th:block th:each="img : ${spaceImgs}">
+									<img th:src="@{/admin/space/view/} + ${img.spImg}" />
+								</th:block> -->
 	                            <div class="card-body">
 	                                <h4 class="card-title" th:text="${space.spName}"></h4>
+	                                
 	                            </div>
 	                            <ul class="list-group">
 	                                <li class="list-group-item" th:text="${space.spKeyword}"></li>
@@ -54,8 +63,6 @@
 	            </div>
 	        </div>
 	    </div>
-	
-	    <script src="/js/lightbox.min.js"></script>
-	    
+
 	</body>
 </html>

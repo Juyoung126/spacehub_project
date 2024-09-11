@@ -3,20 +3,19 @@ package com.spring.admin.space.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.admin.space.domain.Space;
 import com.spring.admin.space.repository.SpaceRepository;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class SpaceServiceImpl implements SpaceService {
 
-	@Setter(onMethod_ = @Autowired)
-	private SpaceRepository spaceRepository;
+	private final SpaceRepository spaceRepository;
     
     // Space 관련 메서드
 	@Override
@@ -30,18 +29,22 @@ public class SpaceServiceImpl implements SpaceService {
 	
 	@Override
 	public void spaceHitUpdate(Space space) {
-		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
-		Space dataSpace = spaceOptional.get();
+//		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
+//		Space dataSpace = spaceOptional.get();
+		// 예외 발생 시 좀 더 명확한 오류 메시지를 제공
+		Space dataSpace = spaceRepository.findById(space.getSpNo())
+                .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + space.getSpNo()));
 		dataSpace.setSpHit(dataSpace.getSpHit()+1);
 		spaceRepository.save(dataSpace);
 	}
 	
 	@Override
 	public Space spaceContent(Space space) {
-//		spaceHitUpdate(space);
 		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
 		Space content = spaceOptional.get();
 		return content;
+//		return spaceRepository.findById(space.getSpNo())
+//                .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + space.getSpNo()));
 	}
 
 	@Override
@@ -66,9 +69,9 @@ public class SpaceServiceImpl implements SpaceService {
 	}
 
 	@Override
-	public void spaceDelete(Space space) {
-		spaceRepository.deleteById(space.getSpNo());
-	}
+	public void spaceDelete(Long spNo) {
+        spaceRepository.deleteById(spNo);
+    }
 
 	@Override
 	public void spaceSave(Space space) {
@@ -81,4 +84,17 @@ public class SpaceServiceImpl implements SpaceService {
 	            .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + spNo));
 	    }
 
+	@Override
+	public void mountHitCount(Long spNo) {
+		Space space = spaceRepository.findById(spNo).orElseThrow(() -> new IllegalArgumentException("Invalid space Id:" + spNo));
+	    space.setSpHit(space.getSpHit() + 1);
+	    spaceRepository.save(space);
+	}
+	
+    // 조회수가 높은 공간 리스트 반환
+    public List<Space> getTopSpaces() {
+        return spaceRepository.findTopSpacesByHitCount(null);
+    }
+	
+	
 }

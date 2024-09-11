@@ -1,11 +1,15 @@
 package com.spring.admin.space.domain;
 
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
@@ -36,12 +40,15 @@ public class SpaceDetail {
 	private String spRules;			// 이용 수칙
 	
 	@Column(name = "sp_start_time")
-	private String spStartTime;		// 시작 시간
+	private String spStartTime;		// 가능 시작 시간
 	
 	@Column(name = "sp_end_time")
-	private String spEndTime;		// 이용 시간 
+	private String spEndTime;		// 종료 시간 
 	
 	@OneToOne
 	@JoinColumn(name = "sp_no", referencedColumnName = "sp_no")
     private Space space; // 공간 번호 (Foreign Key)
+	
+	@OneToMany(mappedBy = "spaceDetail", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SpaceImg> spaceImgs; // SpaceImg와의 관계
 }

@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    color: #000;
 }
 
 /* Wrapper - flex 컨테이너 */
@@ -85,24 +86,6 @@ body {
     padding: 10px 15px;
     border-top: 1px solid #ddd;
     color: #000; /* 리스트 그룹 항목 텍스트 색상 검은색으로 설정 */
-}
-
-/* 버튼 스타일 */
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s;
-}
-
-.btn:hover {
-    background-color: #218838;
 }
 
 /* 공간 정보 없음 메시지 */

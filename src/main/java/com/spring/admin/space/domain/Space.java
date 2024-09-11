@@ -1,12 +1,16 @@
 package com.spring.admin.space.domain;
 
+import java.util.List;
+
 import org.hibernate.annotations.ColumnDefault;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Getter;
@@ -43,8 +47,11 @@ public class Space {
 
     @Column(name = "sp_main_image")
     private String spMainImage;	// 대표 이미지
-
+    
     @ColumnDefault(value = "0")
 	private int spHit;		// 조회수
-
+    
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SpaceDetail> spaceDetails; // SpaceDetail과의 관계
+    
 }

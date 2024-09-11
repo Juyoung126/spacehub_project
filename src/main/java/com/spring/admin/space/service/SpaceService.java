@@ -13,7 +13,7 @@ public interface SpaceService {
 
 	public void spaceUpdate(Space space);
 
-	public void spaceDelete(Space space);
+	public void spaceDelete(Long spNo);
 
 	void spaceHitUpdate(Space space);
 
@@ -21,4 +21,9 @@ public interface SpaceService {
 
 	public Space getSpaceById(Long spNo);
 
+	public void mountHitCount(Long spNo);
+
+	public List<Space> getTopSpaces();
+
+	
 }
