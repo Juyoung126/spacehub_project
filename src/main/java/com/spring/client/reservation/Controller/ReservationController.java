@@ -34,7 +34,7 @@ public class ReservationController {
 	private final ReservationService reservationService;
 	private final UserMypageService userMypageService;
 
-	@GetMapping("/resDetail")
+	@GetMapping("/resList")
 	public String resDetail(HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("loggedInUser");
 		Map<Long, String> endTimeMap = new HashMap<>();
