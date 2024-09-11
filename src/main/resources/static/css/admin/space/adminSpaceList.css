@@ -1,102 +1,101 @@
-/* 기본 스타일 */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    color: #000;
-}
 
-/* Wrapper - flex 컨테이너 */
+/* 전체 레이아웃 */
 .wrapper {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
-/* 메인 콘텐츠 영역 */
 .main-content {
-    flex: 1;
+    flex-grow: 1;
     padding: 20px;
-    overflow-y: auto;
+    background-color: #f9f9f9;
 }
 
-/* 컨테이너 */
+.image-gallery img {
+    height: 300px;
+    width: auto;
+    object-fit: cover; /* Ensures the image covers the space, cropping if necessary */
+}
+
 .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
     padding: 20px;
-}
-
-/* 텍스트 중앙 정렬 및 마진 */
-.text-center {
-    text-align: center;
-}
-
-.mb-4 {
-    margin-bottom: 1.5rem;
-}
-
-/* 카드 레이아웃 */
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-/* 카드 아이템 */
-.col.item {
-    flex: 1 1 calc(33.333% - 1rem);
-    max-width: calc(33.333% - 1rem);
-}
-
-/* 카드 */
-.card {
-    background-color: #fff; /* 카드 배경 색상 흰색으로 설정 */
-    border: 1px solid #ddd;
     border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-img {
+h1, h3 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #ccc;
+}
+
+/* 테이블 스타일 */
+table {
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    border-collapse: collapse;
+    margin-bottom: 20px;
 }
 
-.card-body {
-	background: #fff;
-    padding: 15px;
-    color: #000; /* 카드 본문 텍스트 색상 검은색으로 설정 */
+table th, table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
 }
 
-.card-title {
-    margin: 0;
-    font-size: 1.25rem;
+table th {
+    background-color: #f2f2f2;
     font-weight: bold;
+    color: #555;
 }
 
-/* 리스트 그룹 */
-.list-group {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+table td {
+    background-color: #fff;
+    color: #333;
 }
 
-.list-group-item {
-	background: #fff;
-    padding: 10px 15px;
-    border-top: 1px solid #ddd;
-    color: #000; /* 리스트 그룹 항목 텍스트 색상 검은색으로 설정 */
+/* 공간 상세 테이블 */
+.space-details th {
+    width: 20%;
 }
 
-/* 공간 정보 없음 메시지 */
-.no-spaces {
+.space-details td[colspan="3"] {
+    width: 80%;
+}
+
+/* 리뷰 테이블 */
+.review-table th, .review-table td {
     text-align: center;
-    padding: 20px;
-    font-size: 1.125rem;
-    color: #666;
 }
 
-/* 버튼 정렬 */
-.text-end {
-    text-align: right;
+.review-table th {
+    background-color: #ececec;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    table th, table td {
+        padding: 10px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .button-group .btn-success, .button-group .btn-danger {
+        width: 100%;
+    }
 }

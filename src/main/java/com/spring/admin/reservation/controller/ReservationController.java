@@ -25,24 +25,24 @@ public class ReservationController {
 
 	private final ReservationService reservationService;
 
+
 	@GetMapping("/reservationManager")
 	public String getReservationManager(
 	        @RequestParam(defaultValue = "1") int page,
 	        @RequestParam(defaultValue = "10") int size,
 	        @RequestParam(value = "searchType", required = false) String searchType,
 	        @RequestParam(value = "keyword", required = false) String keyword,
-	        @RequestParam(value = "date", required = false) LocalDateTime date,
+	        @RequestParam(value = "date", required = false) String date,
 	        Model model) {
 
 	    // 검색 조건을 담을 DTO 생성
 	    SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
 	    searchRequestDTO.setKeyWord(keyword);
 	    
-	    if (date != null) {
+	    if (date != null && !date.isEmpty()) {
 	        searchRequestDTO.setDateSearch(LocalDateTime.parse(date + "T00:00:00"));
-	    }else {searchRequestDTO.setDateSearch(date);}
-	    searchRequestDTO.setSearchType(searchType);
-	    
+	    }
+
 	    // PageRequestDTO 빌드
 	    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(page).size(size).build();
 
@@ -55,37 +55,4 @@ public class ReservationController {
 
 	    return "admin/respayManager/reservation";
 	}
-	
-	
-	@GetMapping("/reservationManagerSearch")
-	public String getReservationManagerSearch(
-	        @RequestParam(defaultValue = "1") int page,
-	        @RequestParam(defaultValue = "10") int size,
-	        @RequestParam(value = "searchType", required = false) String searchType,
-	        @RequestParam(value = "keyword", required = false) String keyword,
-	        @RequestParam(value = "date", required = false) LocalDateTime date,
-	        Model model) {
-
-	    // 검색 조건을 담을 DTO 생성
-	    SearchRequestDTO searchRequestDTO = new SearchRequestDTO();
-	    searchRequestDTO.setKeyWord(keyword);
-	    
-	    if (date != null) {
-	        searchRequestDTO.setDateSearch(LocalDateTime.parse(date + "T00:00:00"));
-	    }else {searchRequestDTO.setDateSearch(date);}
-	    searchRequestDTO.setSearchType(searchType);
-	    
-	    // PageRequestDTO 빌드
-	    PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(page).size(size).build();
-
-	    // 서비스에서 페이지 응답 DTO 받아오기
-	    PageResponseDTO<Reservation> pageResponseDTO = reservationService.searchReservations(searchRequestDTO, pageRequestDTO);
-
-	    // 모델에 페이지 응답 DTO 추가
-	    model.addAttribute("reservations", pageResponseDTO.getDtoList());
-	    model.addAttribute("pageResponse", pageResponseDTO);
-
-	    return "admin/respayManager/reservationTable";
-	}
 }
-	

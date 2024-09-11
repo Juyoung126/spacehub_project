@@ -18,10 +18,11 @@
             <div class="container">
                 <h1>공간 수정 페이지</h1>
                 <hr />
-                <form action="#" th:action="@{/admin/space/updateSpace}" method="post" enctype="multipart/form-data">
+                <form action="#" th:action="@{/admin/space/spaceUpdate1}" method="post" enctype="multipart/form-data">
                     <!-- hidden input fields for identifiers -->
                     <input type="hidden" name="spNo" th:value="${updateSpace.spNo}" />
                     <input type="hidden" name="spDetail" th:value="${updateSpaceDetail.spDetail}" />
+                    <input type="hidden" name="apiNo" th:value="${updateSpaceImg.apiNo}" />
                     
                     <table class="form-table">
                         <tbody>
@@ -69,12 +70,21 @@
                                     </div>
                                 </td>
                             </tr>
+							<tr  >
+                                <th><label for="spImg">공간 이미지</label></th>
+                               	<td>
+                               		<img th:src="@{/admin/space/view/} + ${'s_' + updateSpaceImg.spImg}" />
+                               	</td>
+                            </tr>
                             <tr>
                                 <th><label for="spImg">공간 이미지</label></th>
-                                <td>
+                               	<td>
+                                    <!--/*-->
                                     <input type="file" id="spImg" name="spImgFiles" accept="image/*" />
-                                    <div id="imagePreview"></div>
-                                </td>
+                                    <div id="imagePreview"></div>  
+                                    <!--*/-->
+                                    <input type="file" id="file" name="file" accept="image/*" /> 
+	                           </td>
                             </tr>
                         </tbody>
                     </table>
@@ -83,13 +93,15 @@
                     <div class="button-group">
                         <button type="submit" id="spaceSaveBtn" class="btn-success">수정 저장</button>
                         <button type="button" id="spaceCancelBtn" class="btn-danger">취소</button>
+                        <button type="button" id="spaceListBtn" class="btn-success">목록</button>
                     </div>
                     
                 </form>
             </div>
         </div>
     </div>
-
-    <!-- <script src="/js/admin/space/adminUpdateForm.js"></script> -->
+    
+ 	<script src="/js/jquery-3.7.1.min.js"></script>
+    <script src="/js/admin/space/adminUpdateForm.js"></script>
 </body>
 </html>

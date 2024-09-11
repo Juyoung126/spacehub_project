@@ -23,14 +23,10 @@ public class SpaceServiceImpl implements SpaceService {
 		List<Space> spaceList = null;
 		spaceList = (List<Space>) spaceRepository.findAll();
 		return spaceList;
-		//안에 3줄을 리턴 한 줄로 줄일 수 있음
-		//return (List<Space>) spaceRepository.findAll();
 	}
 	
 	@Override
 	public void spaceHitUpdate(Space space) {
-//		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
-//		Space dataSpace = spaceOptional.get();
 		// 예외 발생 시 좀 더 명확한 오류 메시지를 제공
 		Space dataSpace = spaceRepository.findById(space.getSpNo())
                 .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + space.getSpNo()));
@@ -43,17 +39,15 @@ public class SpaceServiceImpl implements SpaceService {
 		Optional<Space> spaceOptional = spaceRepository.findById(space.getSpNo());
 		Space content = spaceOptional.get();
 		return content;
-//		return spaceRepository.findById(space.getSpNo())
-//                .orElseThrow(() -> new EntityNotFoundException("Space not found with id " + space.getSpNo()));
 	}
 
 	@Override
-	public Space getSpace(Long spNo) {
-		Optional<Space> spaceOptional = spaceRepository.findById(spNo);
-		Space updateData = spaceOptional.get();
-		//Space updateData = spaceOptional.findByID(spNo).orElseThrow(()-> new IllegalArgumentException("해당 공간이 없습니다. ID: " + spNO));
-		return updateData;
-	}
+   public Space getSpace(Long spNo) {
+      Optional<Space> spaceOptional = spaceRepository.findById(spNo);
+      Space updateData = spaceOptional.get();
+      //Space updateData = spaceOptional.findByID(spNo).orElseThrow(()-> new IllegalArgumentException("해당 공간이 없습니다. ID: " + spNO));
+      return updateData;
+   }
 
 	@Override
 	public void spaceUpdate(Space space) {

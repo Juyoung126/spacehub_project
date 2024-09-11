@@ -17,13 +17,6 @@ public class SpaceImgServiceImpl implements SpaceImgService{
 	@Autowired
 	public final SpaceImgRepository spaceImgRepository;
 
-//	@Override
-//	public List<SpaceImg> spaceImgList(SpaceImg spaceImg) {
-//		List<SpaceImg> spaceList = null;
-//		spaceList = (List<SpaceImg>) spaceImgRepository.findAll();
-//		return spaceList;
-//	}
-
 	@Override
 	public void spaceImgSave(SpaceImg spaceImg) {
 		spaceImgRepository.save(spaceImg);		
@@ -46,16 +39,12 @@ public class SpaceImgServiceImpl implements SpaceImgService{
 	@Override
 	public void spaceImgUpdate(SpaceImg spaceImg) {
 		Optional<SpaceImg> spaceImgOptional = spaceImgRepository.findById(spaceImg.getApiNo());
-//		SpaceImg updateSpaceImg = spaceImgOptional.get();	
-//		updateSpaceImg.setSpImg(spaceImg.getSpImg());
-//		spaceImgRepository.save(updateSpaceImg);
 		
 		if (spaceImgOptional.isPresent()) {
             SpaceImg updateSpaceImg = spaceImgOptional.get();
             updateSpaceImg.setSpImg(spaceImg.getSpImg());
             spaceImgRepository.save(updateSpaceImg);
         }
-
 	}
 
 	@Override

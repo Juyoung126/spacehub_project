@@ -1,7 +1,3 @@
-document.getElementById("spaceUpdateFormBtn").addEventListener("click", function() {
-    var spNo = document.querySelector('input[name="spNo"]').value;
-    window.location.href = "/admin/space/updateForm/" + spNo;
-});
 
 document.getElementById("spaceListBtn").addEventListener("click", function() {
     window.location.href = "/admin/space/spaceList";
@@ -14,3 +10,15 @@ document.getElementById("spaceDeleteBtn").onclick = function(event) {
         form.submit();  // 폼 제출
     }
 };
+
+
+$(function(){
+	$("#spaceUpdateFormBtn").on("click", function(){
+		let spNo = $("#spNo").val();
+		let apiNo = $(".image").html();
+		location.href = "/admin/space/updateForm/" + spNo + "/" + apiNo;
+		console.log(apiNo);
+	});
+})
+
+    

@@ -83,7 +83,7 @@ public class CustomFileUtil {
         return ResponseEntity.ok().headers(headers).body(resource);
     }
     
-    /* 썸네일 파일 및 파일 삭제
+    /* 썸네일 파일 및 파일 삭제*/
 	public void deleteFile(String fileName, String imgDir){
 	 	if(fileName == null){
 	 		return;
@@ -91,7 +91,7 @@ public class CustomFileUtil {
 	 	//썸네일이 있는지 확인하고 삭제
 	 	String thumbnailFileName = "s_" + fileName;
 		Path thumbnailPath = Paths.get(uploadPath, imgDir, thumbnailFileName);
-		Path filePath = Paths.get(uploadPath, fileName);
+		Path filePath = Paths.get(uploadPath,  imgDir, fileName);
 
 		try {
 			Files.deleteIfExists(filePath);
@@ -99,7 +99,7 @@ public class CustomFileUtil {
 		} catch (IOException e) {
 			throw new RuntimeException(e.getMessage());
 		}
-	}*/
+	}
     
     public void deleteFile(String fileName){
 	 	if(fileName == null){

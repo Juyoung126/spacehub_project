@@ -150,6 +150,47 @@ $timeSlots.on("click", function () {
     updateSelectedTime();
 });
 
+$(".resBtn").on("click", function(){
+   const spNo = $(".spNo").data("spno");
+   const personnel = $("#spCapacity").text();
+    const price = $("#price").text();
+    const startTime2 = (startTime + 9);
+    const totalAmount = selectedCount * price;
+    const resDate = new Date(currentYear, currentMonth, day, startTime2);
+    const formattedResDate = resDate.toISOString();
+
+    console.log(formattedResDate);
+       var reservationData = {
+           
+           spNo:spNo,
+         resDate:formattedResDate,
+         r_start_time:formattedResDate,
+         resUseTime: selectedCount,
+         resPersonnel:personnel,
+         resAmount:totalAmount,
+         resState:"결제대기",
+           
+           
+           // 추가할 데이터
+       };
+
+      $.ajax({
+          url: '/reservation/orders',  
+          type: 'POST',  
+          contentType: 'application/json',
+          data: JSON.stringify(reservationData),
+          success: function(response) {
+              window.location.href = response;
+          },
+          error: function(xhr, status, error) {
+              console.error("예약 오류:", error);
+              alert("예약 중 오류가 발생했습니다.");
+          }
+      });
+   });
+
+
+
 // 페이지 로드 후 초기화
 createCalendar(currentYear, currentMonth);
 populateTimePicker();

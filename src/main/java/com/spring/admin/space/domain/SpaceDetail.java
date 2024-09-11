@@ -19,7 +19,7 @@ import lombok.ToString;
 
 @Setter
 @Getter
-@ToString
+
 @Entity
 @Table(name = "spacehub_space_detail")
 @SequenceGenerator(name = "space_detail_seq", sequenceName = "space_detail_seq", initialValue = 1, allocationSize = 1)

@@ -15,6 +15,7 @@ public interface SpaceRepository extends JpaRepository<Space, Long>{
 
 	// 검색 - 메서드 쿼리 생성 : spName 필드 값과 정확히 일치하는 space 엔티티 검색
 	Space findBySpName(String spName);
+	Space findBySpNo(Long spNo);
 
 	// 검색 - 메서드 부분 일치 검색 : spName필드에 특정 문자열 포함된 모든 space 엔티티 검색
 	List<Space> findBySpNameContaining(String spName);

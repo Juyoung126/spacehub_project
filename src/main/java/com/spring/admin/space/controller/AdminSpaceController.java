@@ -1,5 +1,6 @@
 package com.spring.admin.space.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.admin.auth.service.AdminMypageService;
+import com.spring.admin.domain.Admin;
 import com.spring.admin.space.domain.Space;
 import com.spring.admin.space.domain.SpaceDetail;
 import com.spring.admin.space.domain.SpaceImg;
@@ -22,6 +25,7 @@ import com.spring.admin.space.service.SpaceImgService;
 import com.spring.admin.space.service.SpaceService;
 import com.spring.common.util.CustomFileUtil;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -37,26 +41,26 @@ public class AdminSpaceController {
 	
 	private final CustomFileUtil fileUtil;
 	
+	private final AdminMypageService adminMypageService;
+	
     // 공간 리스트 조회
     @GetMapping("/spaceList")
     public String spaceList(Model model, Space space) {
         List<Space> spaceList = spaceService.spaceList(space);
-//        SpaceImg spaceImgs = spaceImgService.getSpaceImgsBySpaceId(space.getSpNo());
+        List<Space> result = new ArrayList<>();
         
-        model.addAttribute("spaceList", spaceList);
-//        model.addAttribute("spaceImgs", spaceImgs);
+        for(Space spaceData: spaceList) {
+        	  SpaceDetail spaceDetail = spaceDetailService.getSpaceDetailBySpaceId(spaceData.getSpNo());
+              SpaceImg spaceImg = spaceImgService.getSpaceImgsBySpaceId(spaceDetail.getSpace().getSpNo());
+              spaceData.setSpMainImage(spaceImg.getSpImg());
+              result.add(spaceData);
+        }
+        
+        model.addAttribute("spaceList", result);
         
         return "admin/space/adminSpaceList";
     }
     
-//    @ResponseBody
-//    @GetMapping("/spaceList1")
-//    public  List<Space> spaceList1(Space space) {
-//        List<Space> spaceList = spaceService.spaceList(space);
-//       
-//        return spaceList;
-//    }
-
     // 공간 상세 조회
     @GetMapping("/{spNo}")
     public String spaceDetail(@PathVariable Long spNo, Model model) {
@@ -73,17 +77,27 @@ public class AdminSpaceController {
     
     // 공간 등록 폼
     @GetMapping("/insertForm")
-    public String insertForm(Model model) {
-        model.addAttribute("space", new Space());
-        model.addAttribute("spaceDetail", new SpaceDetail());
-        model.addAttribute("spaceImg", new SpaceImg());
-        
-        return "admin/space/adminInsertForm";
+    public String insertForm(HttpSession session, Model model) {
+    	String adminId = (String) session.getAttribute("loggedInAdmin");
+    	if (adminId == null) {
+            return "redirect:/admin"; // 로그인 페이지로 리다이렉트
+        }
+    	
+    	Admin loggedInAdmin = adminMypageService.getAdminById(adminId);
+    	if (loggedInAdmin != null) {
+            model.addAttribute("admin", loggedInAdmin);
+	    	model.addAttribute("space", new Space());
+	        model.addAttribute("spaceDetail", new SpaceDetail());
+	        model.addAttribute("spaceImg", new SpaceImg());
+	        
+	        return "admin/space/adminInsertForm";
+	    } else {
+            return "redirect:/admin"; // 로그인 페이지로 리다이렉트
+        }
     }
 
     @PostMapping("/spaceInsert")
-    public String spaceSave(Space space, SpaceDetail spaceDetail, @RequestParam List<MultipartFile> spImgFiles) {
-    //public String spaceSave(Space space, SpaceDetail spaceDetail, SpaceImg spaceImg) {
+    public String spaceSave(Space space, SpaceDetail spaceDetail, SpaceImg spaceImg) {
         // admNo가 null이 아닌지 확인
         if (space.getAdmNo() == null) {
             // 오류 처리 로직 추가 (예: 예외를 던지거나 사용자에게 오류 메시지 반환)
@@ -97,63 +111,28 @@ public class AdminSpaceController {
         spaceDetail.setSpace(space);
         spaceDetailService.spaceDetailSave(spaceDetail);
 
-        // 이미지 저장
-        for (MultipartFile file : spImgFiles) {
-            SpaceImg spaceImg = new SpaceImg();
-            String fileName = fileUtil.saveFile(file, "spaceImg"); // 파일 저장 로직 추가 필요
-            spaceImg.setSpImg(fileName);
-            spaceImg.setSpaceDetail(spaceDetail); // 공간 상세 정보와 연결
-            spaceImgService.spaceImgSave(spaceImg);
-        }
-        
-        /*if(!spaceImg.getFile().isEmpty()) {
+        if(!spaceImg.getFile().isEmpty()) {
 			String uploadFileName = fileUtil.saveFile(spaceImg.getFile(), "spaceImg");
 			spaceImg.setSpImg(uploadFileName);
 			spaceImg.setSpaceDetail(spaceDetail); // 공간 상세 정보와 연결
 	        spaceImgService.spaceImgSave(spaceImg);
-		}*/
+		}
 
         return "redirect:/admin/space/spaceList";
     }
 
     
-    /*private String saveImgFile(MultipartFile file) {
-        String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
-        Path filePath = Paths.get("/SpaceHub/attachment/spaceImg/" + fileName);
-        try {
-            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return fileName;
-    }*/
-
-
-	/*// 공간 수정 폼
-    @GetMapping("/updateForm/{spNo}")
-    public String updateForm(@PathVariable Long spNo, Long spDetail, Long apiNo, Model model) {
-        Space space = spaceService.getSpace(spNo);
-        SpaceDetail spaceDetail = spaceDetailService.getSpaceDetail(spDetail);
-        SpaceImg spaceImg = spaceImgService.getSpaceImg(apiNo);
-        
-        model.addAttribute("updateData", space);
-        model.addAttribute("updateDate", spaceDetail);
-        model.addAttribute("updateDate", spaceImg);
-        return "admin/space/updateForm";
-    }*/
- // 공간 수정 폼
-    @GetMapping("/updateForm/{spNo}")
+    // 공간 수정 폼
+    @GetMapping("/updateForm/{spNo}/{apiNo}")
     public String updateForm(
             @PathVariable Long spNo, 
             @RequestParam(required = false) Long spDetail, 
-            @RequestParam(required = false) Long apiNo, Model model) {
-
-        Space space = spaceService.getSpace(spNo);
-
-        // Null 검사를 추가하여 예외를 방지
-        SpaceDetail spaceDetail = (spDetail != null) ? spaceDetailService.getSpaceDetail(spDetail) : new SpaceDetail();
-        SpaceImg spaceImg = (apiNo != null) ? spaceImgService.getSpaceImg(apiNo) : new SpaceImg();
-
+            @PathVariable Long apiNo, Model model) {
+    	
+    	  Space space = spaceService.getSpaceById(spNo);
+          SpaceDetail spaceDetail = spaceDetailService.getSpaceDetailBySpaceId(spNo);
+          SpaceImg spaceImg = spaceImgService.getSpaceImgsBySpaceId(spNo);
+          
         model.addAttribute("updateSpace", space);
         model.addAttribute("updateSpaceDetail", spaceDetail);
         model.addAttribute("updateSpaceImg", spaceImg);
@@ -162,61 +141,36 @@ public class AdminSpaceController {
     }
 
 
-    /*// 공간 수정 처리
-    @PostMapping("/spaceUpdate")
-    public String spaceUpdate(Space space) {
-        spaceService.spaceUpdate(space);
-        return "redirect:/admin/space/" + space.getSpNo();
-    }*/
-    
-    @PostMapping("/spaceUpdate")
-    public String spaceUpdate(
-            @RequestParam Long spNo,
-            @RequestParam String spName,
-            @RequestParam Long spHourPrice,
-            @RequestParam String spKeyword,
-            @RequestParam(required = false) MultipartFile spaceImg, Model model) {
-
+    @PostMapping("/spaceUpdate1")
+    public String spaceUpdate(Space space, SpaceDetail spaceDetail, SpaceImg spaceImg) {
+    	System.out.println("-----------------------------");
+    	System.out.println(spaceImg.toString());
         // 공간 정보 업데이트
-        Space space = spaceService.getSpace(spNo);
-        space.setSpName(spName);
-        space.setSpHourPrice(spHourPrice);
-        space.setSpKeyword(spKeyword);
-        spaceService.spaceUpdate(space);
-        
-        //공간 상세 정보 가져오기
-        SpaceDetail spaceDetail = spaceDetailService.getSpaceDetail(spNo);
-        // 기존 이미지 가져오기
-        SpaceImg existingImage = spaceImgService.getSpaceImgsBySpaceId(spNo);
-        // 기존 이미지 삭제
-        if (existingImage != null) {
-            fileUtil.deleteFile(existingImage.getSpImg());
-            spaceImgService.spaceImgDelete(existingImage); // 이미지 삭제 메서드
-        }
+        Space spaceUpdateData = spaceService.getSpace(space.getSpNo());
+        spaceUpdateData.setSpName(space.getSpName());
+        spaceUpdateData.setSpHourPrice(space.getSpHourPrice());
+        spaceUpdateData.setSpKeyword(space.getSpKeyword());
+        spaceService.spaceUpdate(spaceUpdateData);
 
-     // 새로운 이미지 저장
-        if (spaceImg != null && !spaceImg.isEmpty()) {
-            SpaceImg newImage = new SpaceImg();
-            String fileName = fileUtil.saveFile(spaceImg, "spaceImg");
-            newImage.setSpImg(fileName);
-            newImage.setSpaceDetail(spaceDetail); // 공간 상세 정보와 연결
-            spaceImgService.spaceImgSave(newImage);
-        }
-        
-/*        // 새로운 이미지 저장
-        if (spImgFiles != null) {
-            for (MultipartFile file : spImgFiles) {
-                if (!file.isEmpty()) {
-                    SpaceImg spaceImg = new SpaceImg();
-                    String fileName = fileUtil.saveFile(file, "spaceImg");
-                    spaceImg.setSpImg(fileName);
-                    spaceImg.setSpaceDetail(spaceDetail); // 공간 상세 정보와 연결
-                    spaceImgService.spaceImgSave(spaceImg);
-                }
-            }
-        }*/
+    	// 공간 상세 정보 저장
+        spaceDetail.setSpace(space);
+        spaceDetailService.spaceDetailUpdate(spaceDetail);
 
-        return "redirect:/admin/space/" + spNo;
+            SpaceImg existingImage = spaceImgService.getSpaceImg(spaceImg.getApiNo());
+        
+    	    if(spaceImg.getFile().getSize() > 0) {			// 새로운 업로드 파일이 존재하면
+	   			if(existingImage.getSpImg() != null) {	// 기존 파일이 존재하면
+	   				fileUtil.deleteFile(existingImage.getSpImg(), "spaceImg");
+	   			}
+	   			
+	   			String uploadFileName = fileUtil.saveFile(spaceImg.getFile(), "spaceImg");
+	   			spaceImg.setSpImg(uploadFileName);
+	   		 
+	    	   spaceImg.setSpaceDetail(spaceDetail); // 공간 상세 정보와 연결
+	           spaceImgService.spaceImgUpdate(spaceImg);
+    	   }
+
+        return "redirect:/admin/space/" + space.getSpNo();
     }
 
 
@@ -229,7 +183,7 @@ public class AdminSpaceController {
         spaceService.spaceDelete(spNo);
         
         if(deleteSpaceImgData.getSpImg()!=null) {
-			fileUtil.deleteFile(deleteSpaceImgData.getSpImg());
+			fileUtil.deleteFile(deleteSpaceImgData.getSpImg(), "spaceImg");
 		}
         return "redirect:/admin/space/spaceList";
     }

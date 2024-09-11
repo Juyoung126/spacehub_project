@@ -18,12 +18,11 @@
 	                <hr />
 	                
 	                <form id="dataForm">
-	                	<input type="hidden" name="spNo" th:value="${space.spNo}">
+	                	<input type="hidden" name="spNo"  id="spNo" th:value="${space.spNo}">
 	                </form>
 	                
 	                <!-- 공간 이미지 -->
 					<div class="image-gallery">
-					    <!--//<img th:each="img : ${spaceImgs}" th:src="@{/SpaceHub/attachment/spaceImg/} + ${img.spImg}" alt="공간 이미지"/> -->
 					    <th:block th:each="img : ${spaceImgs}">
 					     	<img th:src="@{/admin/space/view/} + ${img.spImg}" />
 					     </th:block>
@@ -96,7 +95,8 @@
 	            </div>
 	        </div>
 	    </div>
-
+		
+		<script src="/js/jquery-3.7.1.min.js"></script>
     	<script src="/js/admin/space/adminSpaceDetail.js"></script>
 	</body>
 </html>

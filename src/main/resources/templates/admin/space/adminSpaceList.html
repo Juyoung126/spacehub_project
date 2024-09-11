@@ -31,17 +31,10 @@
 	                        <div class="card">
 	                        	
 	                            <a th:href="@{'/admin/space/' + ${space.spNo}}" class="space-link">
-	                                <img th:src="@{/admin/space/view/} + *{'s_'+spImg}" alt="공간 이미지" class="card-img"/>
+	                                <img th:src="@{/admin/space/view/} + *{'s_'+ space.spMainImage}" alt="공간 이미지" class="card-img"/>
 	                            </a>
-	                        	<!-- <a th:href="@{'/admin/space/' + ${space.spNo}}" class="space-link">
-								    <img th:src="@{/admin/space/view/s_} + ${spImg}" alt="공간 이미지" class="card-img"/>
-								</a> -->
-	                         	<!-- <th:block th:each="img : ${spaceImgs}">
-									<img th:src="@{/admin/space/view/} + ${img.spImg}" />
-								</th:block> -->
 	                            <div class="card-body">
 	                                <h4 class="card-title" th:text="${space.spName}"></h4>
-	                                
 	                            </div>
 	                            <ul class="list-group">
 	                                <li class="list-group-item" th:text="${space.spKeyword}"></li>

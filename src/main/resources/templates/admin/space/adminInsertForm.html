@@ -26,8 +26,8 @@
 	                    <table class="form-table">
 	                        <tbody>
 		                        <tr>
-		                        	<th>관리자번호(테스트용)</th>
-		                        	<td><input type="text" name="admNo" th:value="${space.admNo}"></td>
+		                        	<th>관리자번호</th>
+		                        	<td><input type="text" name="admNo" th:field="${admin.admNo}" th:value="${space.admNo}" ></td>
 		                        </tr>
 	                            <tr>
 	                                <th><label for="spName">공간 이름</label></th>
@@ -68,9 +68,11 @@
 	                            <tr>
 	                                <th><label for="spImg">공간 이미지</label></th>
 	                                <td>
+	                                    <!--/*-->
 	                                    <input type="file" id="spImg" name="spImgFiles" accept="image/*" />
-	                                    <div id="imagePreview"></div> 
-	                                    <!--//<input type="file" id="file" name="file" accept="image/*" /> -->
+	                                    <div id="imagePreview"></div>  
+	                                    <!--*/-->
+	                                    <input type="file" id="file" name="file" accept="image/*" /> 
 	                                </td>
 	                            </tr>
 	                        </tbody>

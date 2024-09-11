@@ -14,18 +14,7 @@
 	<th:block th:insert="~{template/client/fragments/block :: header}"></th:block>
 	
    <div class="text-center my-3">
-        <h3>문의게시판</h3></div> 
-       <!--/*-->   
-   <div id="boardSearch" class="my-2">
-   		<form id="searchForm">
-   			<!-- /* 페이징 처리를 위한 파라미터 */ -->
-   			<input type="hidden" name="page" id="page" th:value="${inquiryList.pageRequestDTO.page}">
-   			<input type="hidden" name="size" id="size" th:value="${inquiryList.pageRequestDTO.size}">
-   		</form>
-   </div>
-   <!--*/-->
-   
-   
+        <h3>문의게시판</h3></div>   
     <div class="container">  
         <table class="table table-bordered table-hover">
             <thead>
@@ -111,26 +100,6 @@
   <div class="text-end container">
         <button type="button" id="insertFormBtn" class="btn btn-primary btn-sm mb-2">글쓰기</button>
   </div>
- <!--/*-->
-  <nav aria-label="Page navigaion example">
-  	<ul class="pagination justify-content-center">
-  		<!-- 이전 바로가기 10개 존재 여부를 prev 필드의 값으로 확인. */ -->
-  		<li class="page-item" th:if="${inquiryList.prev">
-  			<a th:data-number="${inquiryList.nextPage}" class="page-link">Previous</a>
-  		</li>
-  		
-  		<!--/* 바로가기 번호 출력 */-->
-		<li th:each="number : ${inquiryList.pageNumList}" th:classappend="'page-item ' + ${(inquiryList.current == number) ? 'active':''}">
-			<a class="page-link" th:text="${number}" th:data-number="${number}"></a>
-		</li>
-	
-		<!--/* 다음 바로가기 10개 존재 여부를 next 필드의 값으로 확인. */-->
-		<li class="page-item" th:if="${inquiryList.next}">
-			<a th:data-number="${inquiryList.nextPage}" class="page-link">Next</a>
-		</li> 
-  	</ul>
-  </nav>
- <!--*/-->
 
     <!-- 추가 스크립트 -->
    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
