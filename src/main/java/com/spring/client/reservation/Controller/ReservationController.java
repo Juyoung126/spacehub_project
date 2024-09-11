@@ -12,14 +12,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.spring.admin.space.domain.Space;
+import com.spring.admin.space.repository.SpaceRepository;
 import com.spring.client.auth.service.UserMypageService;
 import com.spring.client.domain.Member;
 import com.spring.client.reservation.domain.Reservation;
 import com.spring.client.reservation.service.ReservationService;
+import com.spring.payment.vo.ReservationDTO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +36,7 @@ public class ReservationController {
 
 	private final ReservationService reservationService;
 	private final UserMypageService userMypageService;
-
+	private final SpaceRepository spaceRepository;
 	@GetMapping("/resList")
 	public String resDetail(HttpSession session, Model model) {
 		String memberId = (String) session.getAttribute("loggedInUser");
@@ -82,11 +85,34 @@ public class ReservationController {
 
 	@PostMapping("/orders")
 	@ResponseBody
-	public String orderSave(Reservation reservation, RedirectAttributes redirectAttributes) {
+	public String orderSave(@RequestBody ReservationDTO reservationDTO, HttpSession session) {
+		
 
+		String memberId = (String) session.getAttribute("loggedInUser");
+		
+		if (memberId == null) {
+			return "/auth/login"; // 로그인 페이지로 리다이렉트
+		}
+		Member member = userMypageService.getMemberById(memberId);
+	
+		Space space = spaceRepository.findBySpNo(reservationDTO.getSpNo());
+		Reservation reservation = new Reservation();
+	    reservation.setSpNo(space);
+	    reservation.setResDate(reservationDTO.getResDate());
+	    reservation.setResStartTime(reservationDTO.getResDate());
+	    reservation.setResUseTime(reservationDTO.getResUseTime());
+	    reservation.setResPersonnel(reservationDTO.getResPersonnel());
+	    reservation.setResAmount(reservationDTO.getResAmount());
+	    reservation.setResState("결제대기");
+	    reservation.setMember(member);
+		log.info("------------------------------------------------------------------------------------------resDate: " + reservation);
+		
+		
+		
+		if(reservationDTO.getResNo()!= null) {
 		// 예약 테이블에 해당 예약 번호가 존재하는지 확인
-		boolean reservationExists = reservationService.isReservationExists(reservation.getResNo());
-
+		boolean reservationExists = reservationService.isReservationExists(reservationDTO.getResNo());
+		
 		// 예약이 이미 존재하면 바로 리다이렉트
 		if (reservationExists) {
 			// resNo를 Base64로 인코딩
@@ -95,7 +121,7 @@ public class ReservationController {
 			// 기존 예약이 존재하는 경우 해당 예약의 결제 페이지로 리다이렉트
 			return "/reservation/orders/payment/" + encodedResNo;
 		}
-
+		}
 		// 예약 정보를 저장
 		Reservation savedReservation = reservationService.reservationInsert(reservation);
 

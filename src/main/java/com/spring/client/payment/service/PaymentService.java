@@ -16,4 +16,6 @@ public interface PaymentService {
 
 	Payment getByresNo(Long rno);
 
+	
+
 }

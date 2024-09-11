@@ -67,6 +67,14 @@ public class PaymentController {
 
 	@PostMapping("/payCancel")
 	public ResponseEntity<String> paymentCancel(@RequestBody PaymentRequest paymentRequest) {
+		
+		if(paymentRequest.getPaymentId() == null) {
+			Long resNo = paymentRequest.getResNo();
+			Payment payment = paymentService.getByresNo(resNo);
+			paymentRequest.setReason("업체측 사정에의한 취소");
+			paymentRequest.setPaymentId(payment.getPayPaymentId());
+		}
+		
 		try {
 			paymentService.paymentCancel(paymentRequest);
 			
