@@ -11,6 +11,7 @@ const $scrollableContainer = $(".scrollable-container");
 
 let currentYear = new Date().getFullYear();
 let currentMonth = new Date().getMonth();
+let day = null;
 let startTime = null;
 let endTime = null;
 let selectedCount = 0;
@@ -40,7 +41,7 @@ function createCalendar(year, month) {
         cell.addEventListener('click', function () {
             cells.forEach(c => c.classList.remove('selected'));
             this.classList.add('selected');
-            const day = this.textContent;
+            day = this.textContent;
             const date = `${year}-${month + 1}-${day}`;
             selectedDateContainer.textContent = `선택된 날짜: ${year}년 ${month + 1}월 ${day}일`;
             timePickerContainer.style.display = 'block';
@@ -152,7 +153,7 @@ $timeSlots.on("click", function () {
 
 $(".resBtn").on("click", function(){
    const spNo = $(".spNo").data("spno");
-   const personnel = $("#spCapacity").text();
+   const personnel = 3;
     const price = $("#price").text();
     const startTime2 = (startTime + 9);
     const totalAmount = selectedCount * price;
@@ -188,8 +189,6 @@ $(".resBtn").on("click", function(){
           }
       });
    });
-
-
 
 // 페이지 로드 후 초기화
 createCalendar(currentYear, currentMonth);

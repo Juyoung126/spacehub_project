@@ -17,17 +17,18 @@
 			<th:block th:insert="~{template/client/fragments/block :: header}"></th:block>
 		    
 		    <div class="container mt-5">
-		    	
 		        <form id="dataForm">
                 	<input type="hidden" name="spNo"  id="spNo" th:value="${space.spNo}">
                 </form>
                 
                 <!-- 공간 이미지 -->
-				<div class="image-gallery">
-				    <th:block th:each="img : ${spaceImgs}">
-				     	<img th:src="@{/space/view/} + ${img.spImg}" />
-				     </th:block>
-				</div>
+	            <div class="image-gallery">
+	                <!--//<img th:each="img : ${spaceImgs}" th:src="@{/SpaceHub/attachment/spaceImg/} + ${img.spImg}" alt="공간 이미지"/> -->
+	                <th:block th:each="img : ${spaceImgs}">
+	                    <span th:data-apiNo="${img.apiNo}" th:text="${img.apiNo}" class="image"></span>
+	                    <img th:src="@{/admin/space/view/} + ${img.spImg}" />
+	                 </th:block>
+	            </div>
                 <hr />
 		    
 		        <!-- 공간 이름과 기본 정보 -->
@@ -44,7 +45,7 @@
 		                </tr>
 		                <tr>
 		                    <th>시간당 가격</th>
-		                    <td th:text="${space.spHourPrice}"></td>
+		                    <td id="price" th:text="${space.spHourPrice}"></td>
 		                </tr>
 		                <tr>
 		                    <th>비치된 물품</th>
@@ -115,14 +116,14 @@
 				<div class="group-button">
 					<div class="spNo" th:data-spno="${space.spNo}"></div>
 				        <a href="/space" class="btn btn-second mt-3">모든 공간 보러 가기</a>
-				        <a href="#" class="btn btn-success mt-3">예약하러 가기</a>
+				        <button type="button" class="btn btn-success mt-3 resBtn">예약하러 가기</button>
 					</div>
 			    </div>
 	
 			<th:block th:insert="~{template/client/fragments/block :: footer}"></th:block>	
 		</div>
 		
-	    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	    <script src="/js/jquery-3.7.1.min.js"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.8/dist/umd/popper.min.js"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

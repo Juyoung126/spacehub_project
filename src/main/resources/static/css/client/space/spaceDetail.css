@@ -7,7 +7,9 @@ body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
 }
-
+.spNo{
+   display:none;
+}
 .table-info {
 	width:600px;
 	margin: 0 auto;
