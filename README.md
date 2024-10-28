@@ -10,67 +10,115 @@
 ---
 
 ### 1. 개발 목표
+
 ✔ 공용 공간 예약 및 결제를 위한 공간 예약웹사이트 구축
+
 ✔ 화면구현부터 백엔드까지 전반적인 구현 경험
+
 ✔ 게시판 CRUD 구현 및 Java를 활용하여 다양한 API 활용
+
 ✔ AJAX 비동기 처리방식으로 페이지 새로고침 없이 데이터 갱신
 
 ---
 
 ### 2. 사용 기술 및 개발환경
-운영체제
-  : Window OS
-사용언어
-  : Front - JavaScript, jQuery, HTML5, CSS3, AJAX, Thymleaf
-  : Back - JAVA, JPA , Servlet
-FrameWork / Library
-  : Spring Framework
-DB
-  : Oracle
-Tool
-  : Eclipse, STS
-WAS
-  : Apache Tomcat 9.0
-Collaboration  
-  : 구글 SMTP 서비스
-API
-  : NHN KCP 결제 API, Google Maps API 
 
+운영체제
+
+  : Window OS
+
+사용언어
+
+  : Front - JavaScript, jQuery, HTML5, CSS3, AJAX, Thymleaf
+
+  : Back - JAVA, JPA , Servlet
+
+FrameWork / Library
+  
+  : Spring Framework
+
+DB
+  
+  : Oracle
+
+Tool
+  
+  : Eclipse, STS
+
+WAS
+  
+  : Apache Tomcat 9.0
+
+Collaboration  
+  
+  : 구글 SMTP 서비스
+
+API
+  
+  : NHN KCP 결제 API, Google Maps API 
 
 ---
 
 ### 3. 핵심 기능
 
 메인 화면 설계
+
           ○ 회원가입 및 로그인 기능
+
           ○ 공간 대여 수칙 및 지도 확인 페이지
+
 마이페이지
+          
           ○ 회원 정보 조회 및 수정 기능 구현
+
           ○ 회원 탈퇴 기능
+
 공간 페이지
+          
           ○ 예약 가능한 공간 조회 기능 
+
           ○ 날짜 및 시간 선택 후 공간 예약 기능 구현
+
           ○ 예약 및 결제 기능 구현
+
           ○ NHN KCP 결제 API 활용
+
           ○ 리뷰 작성 및 조회 기능 구현
 
 문의 게시판
+          
           ○ 문의글 작성, 조회, 수정, 삭제 기능 구현
+
 공지 게시판
+          
           ○ 공지사항 조회 기능 구현
+
 관리자 페이지 (관리자 권한)
+          
           ○ 관리자 마이페이지 (정보 조회, 수정)
+
           ○ 회원 관리 (조회, 삭제)
+
           ○ 회원 상태별 조회 기능 구현
+
           ○ 관리자 관리 (관리자 등록, 조회, 삭제)
+
           ○ 관리자 재직상태별 조회 기능 구현
+
           ○ 공간 정보 작성, 수정, 삭제
+
           ○ 사진 업로드 가능
+
           ○ 예약 내역 관리
+
           ○ 기간/사용자별 검색 기능 구현
+
           ○ 리뷰 및 답글 관리 (작성, 수정, 삭제)
+
           ○ 문의 관리 (문의 조회, 문의답변 등록, 조회, 수정, 삭제)
+
           ○ 공지 관리 (공지 등록, 조회, 수정, 삭제)
+
 
 ---
 
